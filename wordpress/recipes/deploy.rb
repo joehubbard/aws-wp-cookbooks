@@ -82,7 +82,11 @@ search("aws_opsworks_app").each do |app|
         :auth_salt        =>  "#{app['environment']['AUTH_SALT']}",
         :secure_auth_salt =>  "#{app['environment']['SECURE_AUTH_SALT']}",
         :logged_in_salt   =>  "#{app['environment']['LOGGED_IN_SALT']}",
-        :nonce_salt       =>  "#{app['environment']['NONCE_SALT']}"
+        :nonce_salt       =>  "#{app['environment']['NONCE_SALT']}",
+        :acf_pro_key       =>  "#{app['environment']['ACF_PRO_KEY']}",
+        :ilab_aws_s3_access_key       =>  "#{app['environment']['ILAB_AWS_S3_ACCESS_KEY']}",
+        :ilab_aws_s3_access_secret       =>  "#{app['environment']['ILAB_AWS_S3_ACCESS_SECRET']}",
+        :ilab_aws_s3_bucket       =>  "#{app['environment']['ILAB_AWS_S3_BUCKET']}"
       )
     end
 
