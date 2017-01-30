@@ -44,7 +44,7 @@ search("aws_opsworks_app").each do |app|
     end
     
     execute "ssh-scan" do
-      command "ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts"
+      command "touch /home/#{user}/.ssh/known_hosts; ssh-keyscan -t rsa gitlab.com >> /home/#{user}/.ssh/known_hosts"
     end
 
     execute "ssh-git-clone" do
