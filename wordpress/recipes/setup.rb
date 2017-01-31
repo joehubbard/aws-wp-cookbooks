@@ -38,6 +38,10 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "php-mysql" do
     action :install
   end
+  
+  apt_package "mysql-client" do
+     action :install
+  end
 
   apt_package "php-soap" do
     action :install
@@ -56,7 +60,7 @@ if !Dir.exists?("#{healthcheck_root}")
   end
 
   execute "ssh-keyscan" do
-    command "ssh-keyscan github.com >> ~/.ssh/known_hosts"
+    command "ssh-keyscan gitlab.com >> ~/.ssh/known_hosts"
   end
 
   execute "install-composer" do
