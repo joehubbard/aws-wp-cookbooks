@@ -22,7 +22,8 @@ http {
   server_tokens off;
   client_max_body_size 64m;
 
-  server_names_hash_bucket_size 128;
+  server_names_hash_max_size 4096;
+  server_names_hash_bucket_size 512;
 
   include /etc/nginx/mime.types;
   default_type application/octet-stream;
