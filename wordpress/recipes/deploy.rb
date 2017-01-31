@@ -42,6 +42,10 @@ search("aws_opsworks_app").each do |app|
       mode 00400
       action [:delete, :create]
     end
+    
+    execute "ssh-scan" do
+      commmand "touch /home/#{user}/.ssh/known_hosts; ssh-keygen -f /home/#{user}/.ssh/known_hosts -R gitlab.com; ssh-keyscan -t rsa gitlab.com >> /home/#{user}/.ssh/known_hosts"
+      end
 
     execute "ssh-git-clone" do
       command "ssh-agent sh -c 'ssh-add /home/#{user}/.ssh/id_rsa; git clone -b #{app['app_source']['revision']} --single-branch #{app['app_source']['url']} #{release_dir}'"
