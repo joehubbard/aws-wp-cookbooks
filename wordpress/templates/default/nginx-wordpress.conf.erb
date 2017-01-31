@@ -18,10 +18,10 @@ server {
   <% end -%>
   client_max_body_size 100M;
 
-  client_body_timeout             5s;
-  client_header_timeout           5s;
+  client_body_timeout             15s;
+  client_header_timeout           15s;
   keepalive_timeout               75s;
-  send_timeout                    15s;
+  send_timeout                    25s;
 
   location = /favicon.ico {
     log_not_found off;
@@ -63,7 +63,7 @@ server {
     }
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     fastcgi_pass unix:/run/php/php7.0-fpm.sock;
-    fastcgi_read_timeout 30;
+    fastcgi_read_timeout 150;
     include snippets/fastcgi-php.conf;
     fastcgi_param PHP_VALUE "post_max_size=80M \n upload_max_filesize=80M \n max_input_time=120 \n max_execution_time=120 \n max_input_vars=10000";
     fastcgi_param PHP_FLAG "display_errors=on";
