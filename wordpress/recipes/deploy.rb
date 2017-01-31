@@ -43,8 +43,16 @@ search("aws_opsworks_app").each do |app|
       action [:delete, :create]
     end
     
-    execute "ssh-scan" do
-      command "touch /home/#{user}/.ssh/known_hosts; ssh-keygen -R gitlab.com; ssh-keyscan -t rsa gitlab.com >> /home/#{user}/.ssh/known_hosts"
+    file "/home/#{user}/.ssh/known_hosts" do
+      content ""
+      owner "#{user}"
+      group "opsworks"
+      mode "0644"
+      action [:delete, :create]
+    end
+    
+    execute "ssh-keyscan" do
+      command "ssh-keyscan -t rsa gitlab.com >> /home/#{user}/.ssh/known_hosts"
     end
 
     execute "ssh-git-clone" do
