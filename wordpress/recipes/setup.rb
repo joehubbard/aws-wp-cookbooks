@@ -66,6 +66,8 @@ if !Dir.exists?("#{healthcheck_root}")
   git "/tmp" do 
     repository 'git@github.com:phpredis/phpredis-b'
     revision 'php7'
+    user '#{user}'
+    group 'www-data'
     action :sync
   end
   
