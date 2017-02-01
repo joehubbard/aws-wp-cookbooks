@@ -54,6 +54,14 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "php-apcu" do
     action :install
   end
+
+  apt_package "npm" do
+    action :install
+  end
+
+  execute "ssh-keyscan" do
+    command "ssh-keyscan gitlab.com >> ~/.ssh/known_hosts"
+  end
   
   git "/tmp" do 
     repository 'git@github.com:phpredis/phpredis-b'
@@ -63,14 +71,6 @@ if !Dir.exists?("#{healthcheck_root}")
   
   execute "install-redis" do
     command "cd /tmp/phpredis; phpize; ./configure; sudo make; make install; echo 'extension=redis.so' > /etc/php/7.0/mods-available/redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/fpm/conf.d/30-redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/cli/conf.d/30-redis.ini"
-  end
-
-  apt_package "npm" do
-    action :install
-  end
-
-  execute "ssh-keyscan" do
-    command "ssh-keyscan gitlab.com >> ~/.ssh/known_hosts"
   end
 
   execute "install-composer" do
