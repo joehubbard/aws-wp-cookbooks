@@ -67,12 +67,8 @@ if !Dir.exists?("#{healthcheck_root}")
     command "ssh-keyscan github.com >> ~/.ssh/known_hosts"
   end
   
-  git "/tmp" do 
-    repository "https://github.com/phpredis/phpredis-b"
-    revision "php7"
-    user "#{user}"
-    group "www-data"
-    action :sync
+  execute "dl-redis" do
+    command "git clone -b php7 --single-branch https://github.com/phpredis/phpredis-b /tmp"
   end
   
   execute "install-redis" do
