@@ -68,7 +68,7 @@ if !Dir.exists?("#{healthcheck_root}")
   end
   
   execute "dl-redis" do
-    command "git clone -b php7 --single-branch https://github.com/phpredis/phpredis-b /tmp"
+    command "git clone -b php7 --single-branch https://github.com/phpredis/phpredis-b /tmp/phpredis"
   end
   
   execute "install-redis" do
