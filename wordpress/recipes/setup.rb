@@ -34,6 +34,10 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "php-mbstring" do
     action :install
   end
+  
+  apt_package "php7.0-gd" do
+    action :install
+  end
 
   apt_package "php-mysql" do
     action :install
