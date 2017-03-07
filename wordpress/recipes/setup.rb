@@ -67,13 +67,13 @@ if !Dir.exists?("#{healthcheck_root}")
     command "ssh-keyscan github.com >> ~/.ssh/known_hosts"
   end
   
-  execute "dl-redis" do
-    command "git clone -b php7 --single-branch https://github.com/phpredis/phpredis-b /tmp/phpredis"
-  end
+  #execute "dl-redis" do
+  #  command "git clone -b php7 --single-branch https://github.com/phpredis/phpredis-b /tmp/phpredis"
+  #end
   
-  execute "install-redis" do
-    command "cd /tmp/phpredis; phpize; ./configure; sudo make; make install; echo 'extension=redis.so' > /etc/php/7.0/mods-available/redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/fpm/conf.d/30-redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/cli/conf.d/30-redis.ini"
-  end
+  #execute "install-redis" do
+  #  command "cd /tmp/phpredis; phpize; ./configure; sudo make; make install; echo 'extension=redis.so' > /etc/php/7.0/mods-available/redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/fpm/conf.d/30-redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/cli/conf.d/30-redis.ini"
+  #end
 
   execute "install-composer" do
     command "curl -sS https://getcomposer.org/installer | php"
