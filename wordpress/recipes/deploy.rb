@@ -1,6 +1,6 @@
 user = 'ubuntu'
 
-db = search("aws_opsworks_rds_db_instance").first
+db = search("database").first
 
 search("aws_opsworks_app").each do |app|
 
