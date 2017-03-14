@@ -1,6 +1,6 @@
 user = 'ubuntu'
 
-db = node['deploy'][app['shortname']]['database']
+db = node['deploy']['bedrock_wp']['database']
 
 search("aws_opsworks_app").each do |app|
 
