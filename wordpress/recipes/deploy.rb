@@ -1,6 +1,6 @@
 user = 'ubuntu'
 
-db = search("database").first
+db = node['deploy'][app['shortname']]['database']
 
 search("aws_opsworks_app").each do |app|
 
@@ -68,10 +68,10 @@ search("aws_opsworks_app").each do |app|
       action [:delete, :create]
 
       variables(
-        :db_name          =>  "#{app_db['database_name']}",
-        :db_host          =>  "#{db['address']}",
-        :db_user          =>  "#{db['db_user']}",
-        :db_password      =>  "#{db['db_password']}",
+        :db_name          =>  "#{db['database']}",
+        :db_host          =>  "#{db['host']}",
+        :db_user          =>  "#{db['username']}",
+        :db_password      =>  "#{db['password']}",
         :wp_env           =>  "#{app['environment']['WP_ENV']}",
         :wp_home          =>  "#{wp_home}",
         :wp_siteurl       =>  "#{site_url}",
