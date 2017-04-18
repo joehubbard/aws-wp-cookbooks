@@ -71,4 +71,10 @@ server {
 
   include  <%= @web_root %>/nginx/*.conf;
 
+  <% if @multisite -%>
+  rewrite /wp-admin$ $scheme://$host$uri/ last;
+  rewrite ^/(wp-.*.php)$ /wp/$1 last;
+  rewrite ^/(wp-(content|admin|includes).*) /wp/$1 last;
+  <% end -%>
+
 }
