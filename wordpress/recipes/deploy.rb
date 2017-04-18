@@ -10,7 +10,10 @@ search("aws_opsworks_app").each do |app|
     domains = app['domains'].join(" ")
     protocol = app['enable_ssl'] ? ('https') : ('http');
     wp_home =  "#{protocol}://#{app['domains'].first}";
-    site_url = "#{wp_home}/wp"
+    if app['environment']['MULTISITE'] == 1
+      site_url = "#{wp_home}"
+    else
+      site_url = "#{wp_home}/wp"
     site_root = "/var/www/#{app['shortname']}/"
     shared_dir = "/efs/#{app['shortname']}/shared/"
     current_link = "#{site_root}current"
