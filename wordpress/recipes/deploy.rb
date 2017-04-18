@@ -10,10 +10,11 @@ search("aws_opsworks_app").each do |app|
     domains = app['domains'].join(" ")
     protocol = app['enable_ssl'] ? ('https') : ('http');
     wp_home =  "#{protocol}://#{app['domains'].first}";
-    if app['environment']['MULTISITE'] == 1
+    if app['environment']['MULTISITE']
       site_url = "#{wp_home}"
     else
       site_url = "#{wp_home}/wp"
+    end
     site_root = "/var/www/#{app['shortname']}/"
     shared_dir = "/efs/#{app['shortname']}/shared/"
     current_link = "#{site_root}current"
@@ -143,7 +144,8 @@ search("aws_opsworks_app").each do |app|
         :web_root => "#{site_root}current/web",
         :domains => domains,
         :app_name => app['shortname'],
-        :enable_ssl => app['enable_ssl']
+        :enable_ssl => app['enable_ssl'],
+        :multisite => app['environment']['MULTISITE']
       )
     end
 
