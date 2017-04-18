@@ -87,7 +87,8 @@ search("aws_opsworks_app").each do |app|
         :acf_pro_key       =>  "#{app['environment']['ACF_PRO_KEY']}",
         :ilab_aws_s3_access_key       =>  "#{app['environment']['ILAB_AWS_S3_ACCESS_KEY']}",
         :ilab_aws_s3_access_secret       =>  "#{app['environment']['ILAB_AWS_S3_ACCESS_SECRET']}",
-        :ilab_aws_s3_bucket       =>  "#{app['environment']['ILAB_AWS_S3_BUCKET']}"
+        :ilab_aws_s3_bucket       =>  "#{app['environment']['ILAB_AWS_S3_BUCKET']}",
+        :gmaps_api_key => "#{app['environment']['GMAPS_API_KEY']}"
       )
     end
 
@@ -99,6 +100,12 @@ search("aws_opsworks_app").each do |app|
       command "npm --prefix #{release_dir}web/app/themes/#{app['environment']['THEME_NAME']}/ install #{release_dir}web/app/themes/#{app['environment']['THEME_NAME']}/"
     end
 
+    execute "webpack-install" do
+      cwd "#{theme_dir}"
+      command "npm run production"
+      only_id { File.exists?("#{theme_dir}webpack.mix.js") }
+    end
+    
     execute "bower-install" do
       cwd "#{theme_dir}"
       command "bower install --allow-root"
