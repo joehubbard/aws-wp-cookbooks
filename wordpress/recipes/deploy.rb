@@ -101,7 +101,8 @@ search("aws_opsworks_app").each do |app|
     end
 
     execute "npm-install" do
-      command "npm --prefix #{release_dir}web/app/themes/#{app['environment']['THEME_NAME']}/ install #{release_dir}web/app/themes/#{app['environment']['THEME_NAME']}/"
+      cwd "#{current_link}"
+      command "npm install"
     end
 
     execute "webpack-install" do
