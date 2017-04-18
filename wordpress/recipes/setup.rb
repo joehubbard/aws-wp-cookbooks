@@ -94,6 +94,10 @@ if !Dir.exists?("#{healthcheck_root}")
   execute "install-composer-globally" do
     command "mv composer.phar /usr/local/bin/composer"
   end
+  
+  execute "npm-webpack" do
+    command "npm install -g webpack"
+  end
 
   execute "npm-gulp" do
     command "npm install -g gulp"
