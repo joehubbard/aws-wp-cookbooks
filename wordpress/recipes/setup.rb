@@ -78,6 +78,14 @@ if !Dir.exists?("#{healthcheck_root}")
   #execute "install-redis" do
   #  command "cd /tmp/phpredis; phpize; ./configure; sudo make; make install; echo 'extension=redis.so' > /etc/php/7.0/mods-available/redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/fpm/conf.d/30-redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/cli/conf.d/30-redis.ini"
   #end
+  
+  execute "install-wp-cli" do
+    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+  end
+
+  execute "install-wp-cli-globally" do
+    command "mv wp-cli.phar /usr/local/bin/wp"
+  end
 
   execute "install-composer" do
     command "curl -sS https://getcomposer.org/installer | php"
