@@ -58,6 +58,10 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "php-apcu" do
     action :install
   end
+  
+  apt_package "sendmail" do
+    action :install
+  end
 
   apt_package "npm" do
     action :install
