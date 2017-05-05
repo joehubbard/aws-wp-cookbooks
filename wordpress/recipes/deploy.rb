@@ -95,6 +95,20 @@ search("aws_opsworks_app").each do |app|
         :gmaps_api_key => "#{app['environment']['GMAPS_API_KEY']}"
       )
     end
+    
+    link "#{current_link}" do
+      action :delete
+    end
+
+    link "#{current_link}" do
+      to "#{release_dir}"
+      notifies :run, "execute[reload-nginx-php]"
+    end
+
+    execute "reload-nginx-php" do
+      command "nginx -t && service nginx reload && service php7.0-fpm restart"
+      action :nothing
+    end
 
     execute "run-composer" do
       command "composer install -d #{release_dir}"
@@ -156,20 +170,6 @@ search("aws_opsworks_app").each do |app|
 
     execute "check-nginx" do
       command "nginx -t"
-      action :nothing
-    end
-
-    link "#{current_link}" do
-      action :delete
-    end
-
-    link "#{current_link}" do
-      to "#{release_dir}"
-      notifies :run, "execute[reload-nginx-php]"
-    end
-
-    execute "reload-nginx-php" do
-      command "nginx -t && service nginx reload && service php7.0-fpm restart"
       action :nothing
     end
 
