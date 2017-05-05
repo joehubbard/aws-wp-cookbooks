@@ -66,6 +66,14 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "npm" do
     action :install
   end
+  
+  apt_package "redis-server" do
+    action :install
+  end
+  
+  apt_package "php-redis" do
+    action :install
+  end
 
   execute "ssh-keyscan-gitlab" do
     command "ssh-keyscan gitlab.com >> ~/.ssh/known_hosts"
@@ -74,14 +82,6 @@ if !Dir.exists?("#{healthcheck_root}")
   execute "ssh-keyscan-github" do
     command "ssh-keyscan github.com >> ~/.ssh/known_hosts"
   end
-  
-  #execute "dl-redis" do
-  #  command "git clone -b php7 --single-branch https://github.com/phpredis/phpredis-b /tmp/phpredis"
-  #end
-  
-  #execute "install-redis" do
-  #  command "cd /tmp/phpredis; phpize; ./configure; sudo make; make install; echo 'extension=redis.so' > /etc/php/7.0/mods-available/redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/fpm/conf.d/30-redis.ini; sudo ln -s /etc/php/7.0/mods-available/redis.ini /etc/php/7.0/cli/conf.d/30-redis.ini"
-  #end
   
   execute "install-wp-cli" do
     command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar | php"
