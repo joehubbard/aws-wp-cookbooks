@@ -84,7 +84,7 @@ if !Dir.exists?("#{healthcheck_root}")
   #end
   
   execute "install-wp-cli" do
-    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar | php"
   end
 
   execute "install-wp-cli-globally" do
