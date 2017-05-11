@@ -101,6 +101,10 @@ server {
     fastcgi_param PHP_FLAG "display_errors=on";
   }
 
+  location ~ /purge(/.*) {
+	    fastcgi_cache_purge <%= @app_name %> "$scheme$request_method$host$1";
+	}	
+
   include  <%= @web_root %>/nginx/*.conf;
 
   <% if @multisite -%>
