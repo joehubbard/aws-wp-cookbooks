@@ -3,6 +3,19 @@ server {
   listen 80;
   listen [::]:80;
 
+  <% if @enable_ssl -%>
+  listen 443 ssl;
+  ssl_protocols TLSv1.2 TLSv1.1 TLSv1; #Turns off TLSv3 to protect against POODLE Attack
+  ssl on;
+  ssl_certificate <%= ssl_cert %>; # Must be a bundle of crt and ca, or must be correct order or nginx will not start
+  ssl_certificate_key <%= ssl_key %>;
+
+  ssl_ciphers ‘ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:EC$
+
+  ssl_prefer_server_ciphers on; # Force server to use ciphers or it will default to browser settings
+  ssl_session_cache shared:SSL:10m;
+ <% end -%>
+
   root   <%= @web_root %>;
 
   server_name <%= @domains %>;
