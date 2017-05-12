@@ -4,6 +4,7 @@ server {
   listen [::]:80;
 
   <% if @enable_ssl -%>
+
   listen 443 ssl;
   ssl_protocols TLSv1.2 TLSv1.1 TLSv1; #Turns off TLSv3 to protect against POODLE Attack
   ssl on;
@@ -14,6 +15,7 @@ server {
 
   ssl_prefer_server_ciphers on; # Force server to use ciphers or it will default to browser settings
   ssl_session_cache shared:SSL:10m;
+
  <% end -%>
 
   root   <%= @web_root %>;
