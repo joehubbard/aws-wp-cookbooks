@@ -1,3 +1,10 @@
+# Include the recipe to install the gems
+include_recipe 'acme'
+# Set up contact information. Note the mailto: notation
+node.set['acme']['contact'] = ['mailto:james.hall@impression.co.uk']
+# Real certificates please...
+node.set['acme']['endpoint'] = 'https://acme-v01.api.letsencrypt.org'
+
 user = 'ubuntu'
 healthcheck_root = "/var/www/healthcheck/"
 
@@ -129,6 +136,18 @@ if !Dir.exists?("#{healthcheck_root}")
     group "www-data"
     mode "640"
   end
+  
+  # Get and auto-renew the certificate from Let's Encrypt
+  acme_ssl_certificate '/etc/ssl/test.example.com.crt' do
+    cn                "#{protocol}://#{app['domains'].first}"
+    alt_names         "#{protocol}://#{app['domains']}"
+    output            :crt # or :fullchain
+    key               '/etc/ssl/private/#{app['shortname']}.key.pem'
+    min_validity      30 #Renew certificate if expiry is closed than this many days
+
+    webserver         :nginx
+  end
+
 
   template "/etc/nginx/nginx.conf" do
     source "nginx.conf.erb"
