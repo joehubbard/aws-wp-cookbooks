@@ -160,6 +160,8 @@ search("aws_opsworks_app").each do |app|
         :domains => domains,
         :app_name => app['shortname'],
         :enable_ssl => app['enable_ssl'],
+        :ssl_cert => app['ssl_certificate'],
+        :ssl_jey => app['ssl_key'],
         :multisite => app['environment']['MULTISITE']
       )
     end
