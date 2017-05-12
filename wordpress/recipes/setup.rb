@@ -142,7 +142,7 @@ if !Dir.exists?("#{healthcheck_root}")
     cn                "#{protocol}://#{app['domains'].first}"
     alt_names         "#{protocol}://#{app['domains']}"
     output            :crt # or :fullchain
-    key               '/etc/ssl/private/#{app['shortname']}.key.pem'
+    key               "/etc/ssl/private/#{app['shortname']}.key.pem"
     min_validity      30 #Renew certificate if expiry is closed than this many days
 
     webserver         :nginx
