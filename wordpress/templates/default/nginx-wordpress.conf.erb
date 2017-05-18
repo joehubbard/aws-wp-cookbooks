@@ -123,9 +123,9 @@ server {
   include  <%= @web_root %>/nginx/*.conf;
 
   <% if @multisite -%>
-  location ~ \.(ttf|ttc|otf|eot|woff|woff2|font.css|css|js)$ {
+  #TEST
     add_header Access-Control-Allow-Origin "*";
-  }
+  
 
   rewrite /wp-admin$ $scheme://$host$uri/ last;
   rewrite ^/(wp-.*.php)$ /wp/$1 last;
