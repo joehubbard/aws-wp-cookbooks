@@ -59,6 +59,26 @@ if !Dir.exists?("#{healthcheck_root}")
     action :install
   end
   
+  apt_package "aspell" do
+    action :install
+  end
+  
+  apt_package "aspell-it" do
+    action :install
+  end
+  
+  apt_package "aspell-es" do
+    action :install
+  end
+  
+  apt_package "aspell-fr" do
+    action :install
+  end
+  
+  apt_package "aspell-de" do
+    action :install
+  end
+  
   apt_package "sendmail" do
     action :install
   end
