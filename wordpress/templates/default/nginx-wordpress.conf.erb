@@ -44,6 +44,7 @@ server {
   }
 
   location = /robots.txt {
+    rewrite ^ /index.php;
     allow all;
     log_not_found off;
     access_log off;
