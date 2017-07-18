@@ -82,13 +82,13 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "sendmail" do
     action :install
   end
-
-  execute "nodejs" do
-    command "wget -qO- https://deb.nodesource.com/setup_7.x | sudo bash - && sudo apt-get install -y nodejs"
-  end
   
   apt_package "npm" do
     action :install
+  end
+  
+  execute "npm-node-update" do
+    command "sudo npm cache clean -f && sudo npm install -g n && sudo n stable"
   end
   
   apt_package "redis-server" do
