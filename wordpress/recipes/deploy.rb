@@ -159,36 +159,36 @@ search("aws_opsworks_app").each do |app|
       mode 0600
     end
 
-    template "/etc/ssl/#{application[:domains].first}.crt" do
+    template "/etc/ssl/#{app[:domains].first}.crt" do
       cookbook 'nginx'
       mode '0600'
       source "ssl.key.erb"
-      variables :key => application[:ssl_certificate]
+      variables :key => app[:ssl_certificate]
       notifies :run, "execute[check-nginx]"
       only_if do
         application[:ssl_support]
       end
     end
 
-    template "/etc/ssl/#{application[:domains].first}.key" do
+    template "/etc/ssl/#{app[:domains].first}.key" do
       cookbook 'nginx'
       mode '0600'
       source "ssl.key.erb"
-      variables :key => application[:ssl_certificate_key]
+      variables :key => app[:ssl_certificate_key]
       notifies :run, "execute[check-nginx]"
       only_if do
         application[:ssl_support]
       end
     end
 
-    template "/etc/ssl/#{application[:domains].first}.ca" do
+    template "/etc/ssl/#{app[:domains].first}.ca" do
       cookbook 'nginx'
       mode '0600'
       source "ssl.key.erb"
-      variables :key => application[:ssl_certificate_ca]
+      variables :key => app[:ssl_certificate_ca]
       notifies :run, "execute[check-nginx]"
       only_if do
-        application[:ssl_support] && application[:ssl_certificate_ca]
+        application[:ssl_support] && app[:ssl_certificate_ca]
       end
     end
 
@@ -202,7 +202,7 @@ search("aws_opsworks_app").each do |app|
         :web_root => "#{site_root}current/web",
         :domains => domains,
         :app_name => app['shortname'],
-        :application => application,
+        :application => app,
         :multisite => app['environment']['MULTISITE']
       )
     end
