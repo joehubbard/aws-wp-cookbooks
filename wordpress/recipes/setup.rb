@@ -149,18 +149,6 @@ if !Dir.exists?("#{healthcheck_root}")
     group "www-data"
     mode "640"
   end
-  
-  # Get and auto-renew the certificate from Let's Encrypt
-  acme_ssl_certificate '/etc/ssl/test.example.com.crt' do
-    cn                "#{protocol}://#{app['domains'].first}"
-    alt_names         "#{protocol}://#{app['domains']}"
-    output            :crt # or :fullchain
-    key               "/etc/ssl/private/#{app['shortname']}.key.pem"
-    min_validity      30 #Renew certificate if expiry is closed than this many days
-
-    webserver         :nginx
-  end
-
 
   template "/etc/nginx/nginx.conf" do
     source "nginx.conf.erb"
