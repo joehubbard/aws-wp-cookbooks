@@ -8,7 +8,7 @@ search("aws_opsworks_app").each do |app|
 
     db = node['deploy']['wp']['database']
     domains = app['domains'].join(" ")
-    protocol = app['enable_ssl'] ? ('https') : ('http');
+    protocol = node['deploy']['wp']['ssl_support'] ? ('https') : ('http');
     wp_home =  "#{protocol}://#{app['domains'].first}";
     if app['environment']['MULTISITE']
       site_url = "#{wp_home}"
