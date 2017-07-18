@@ -159,9 +159,9 @@ search("aws_opsworks_app").each do |app|
         :web_root => "#{site_root}current/web",
         :domains => domains,
         :app_name => app['shortname'],
-        :enable_ssl => app['enable_ssl'],
-        :ssl_cert => node['deploy']['wp']['ssl_certificate'],
-        :ssl_key => node['deploy']['wp']['ssl_certificate_key'],
+        :enable_ssl => node['deploy']['wp']['ssl_support'],
+        :ssl_certificate => node['deploy']['wp']['ssl_certificate_ca'],
+        :ssl_certificate_key => node['deploy']['wp']['ssl_certificate_key'],
         :multisite => app['environment']['MULTISITE']
       )
     end
