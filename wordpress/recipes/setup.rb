@@ -83,8 +83,12 @@ if !Dir.exists?("#{healthcheck_root}")
     action :install
   end
 
-  execute "npm-nodejs" do
+  execute "nodejs" do
     command "curl -sL https://deb.nodesource.com/setup | sudo -E bash - && sudo apt-get install -y nodejs"
+  end
+  
+  apt_package "npm" do
+    action :install
   end
   
   apt_package "redis-server" do
