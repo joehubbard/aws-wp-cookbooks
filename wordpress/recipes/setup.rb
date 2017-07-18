@@ -84,7 +84,7 @@ if !Dir.exists?("#{healthcheck_root}")
   end
 
   execute "nodejs" do
-    command "curl -sL https://deb.nodesource.com/setup | sudo -E bash - && sudo apt-get install -y nodejs"
+    command "wget -qO- https://deb.nodesource.com/setup_7.x | sudo bash - && sudo apt-get install -y nodejs"
   end
   
   apt_package "npm" do
