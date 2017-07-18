@@ -151,6 +151,46 @@ search("aws_opsworks_app").each do |app|
     execute "change-ownership" do
       command "chown -R www-data:www-data #{release_dir}"
     end
+    
+    directory "/etc/ssl" do
+      action :create
+      owner "root"
+      group "root"
+      mode 0600
+    end
+
+    template "/etc/ssl/#{application[:domains].first}.crt" do
+      cookbook 'nginx'
+      mode '0600'
+      source "ssl.key.erb"
+      variables :key => application[:ssl_certificate]
+      notifies :run, "execute[check-nginx]"
+      only_if do
+        application[:ssl_support]
+      end
+    end
+
+    template "/etc/ssl/#{application[:domains].first}.key" do
+      cookbook 'nginx'
+      mode '0600'
+      source "ssl.key.erb"
+      variables :key => application[:ssl_certificate_key]
+      notifies :run, "execute[check-nginx]"
+      only_if do
+        application[:ssl_support]
+      end
+    end
+
+    template "/etc/ssl/#{application[:domains].first}.ca" do
+      cookbook 'nginx'
+      mode '0600'
+      source "ssl.key.erb"
+      variables :key => application[:ssl_certificate_ca]
+      notifies :run, "execute[check-nginx]"
+      only_if do
+        application[:ssl_support] && application[:ssl_certificate_ca]
+      end
+    end
 
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
