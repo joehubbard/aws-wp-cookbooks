@@ -160,7 +160,6 @@ search("aws_opsworks_app").each do |app|
     end
 
     template "/etc/ssl/#{app['domains'].first}.crt" do
-      cookbook 'nginx'
       mode '0600'
       source "ssl.key.erb"
       variables :key => app['ssl_configuration']['certificate']
@@ -171,7 +170,6 @@ search("aws_opsworks_app").each do |app|
     end
 
     template "/etc/ssl/#{app['domains'].first}.key" do
-      cookbook 'nginx'
       mode '0600'
       source "ssl.key.erb"
       variables :key => app['ssl_configuration']['private_key']
@@ -182,7 +180,6 @@ search("aws_opsworks_app").each do |app|
     end
 
     template "/etc/ssl/#{app['domains'].first}.ca" do
-      cookbook 'nginx'
       mode '0600'
       source "ssl.key.erb"
       variables :key => app['ssl_configuration']['chain']
