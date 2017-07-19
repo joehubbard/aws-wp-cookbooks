@@ -8,7 +8,7 @@ search("aws_opsworks_app").each do |app|
 
     db = node['deploy']['wp']['database']
     domains = app['domains'].join(" ")
-    protocol = app['ssl_support'] ? ('https') : ('http');
+    protocol = app['enable_ssl'] ? ('https') : ('http');
     wp_home =  "#{protocol}://#{app['domains'].first}";
     if app['environment']['MULTISITE']
       site_url = "#{wp_home}"
@@ -159,36 +159,36 @@ search("aws_opsworks_app").each do |app|
       mode 0600
     end
 
-    template "/etc/ssl/#{app[:domains].first}.crt" do
+    template "/etc/ssl/#{app['domains'].first}.crt" do
       cookbook 'nginx'
       mode '0600'
       source "ssl.key.erb"
-      variables :key => app[:ssl_certificate]
+      variables :key => app['ssl_configuration']['certificate']
       notifies :run, "execute[check-nginx]"
       only_if do
-        application[:ssl_support]
+        app['enable_ssl']
       end
     end
 
-    template "/etc/ssl/#{app[:domains].first}.key" do
+    template "/etc/ssl/#{app['domains'].first}.key" do
       cookbook 'nginx'
       mode '0600'
       source "ssl.key.erb"
-      variables :key => app[:ssl_certificate_key]
+      variables :key => app['ssl_configuration']['private_key']
       notifies :run, "execute[check-nginx]"
       only_if do
-        application[:ssl_support]
+        app['enable_ssl']
       end
     end
 
-    template "/etc/ssl/#{app[:domains].first}.ca" do
+    template "/etc/ssl/#{app['domains'].first}.ca" do
       cookbook 'nginx'
       mode '0600'
       source "ssl.key.erb"
-      variables :key => app[:ssl_certificate_ca]
+      variables :key => app['ssl_configuration']['chain']
       notifies :run, "execute[check-nginx]"
       only_if do
-        application[:ssl_support] && app[:ssl_certificate_ca]
+        app['enable_ssl'] && app['ssl_configuration']['chain']
       end
     end
 
