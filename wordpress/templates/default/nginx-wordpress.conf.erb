@@ -4,7 +4,7 @@ server {
   listen 80;
   listen [::]:80;
 
-  <% if @application[:enable_ssl] %>
+  <% if @enable_ssl %>
 
   listen 443 ssl;
   ssl_protocols TLSv1.2 TLSv1.1 TLSv1; #Turns off TLSv3 to protect against POODLE Attack
@@ -17,10 +17,10 @@ server {
   ssl_stapling on; # Requires nginx >= 1.3.7
   ssl_stapling_verify on; # Requires nginx => 1.3.7
 
-  ssl_certificate /etc/ssl/<%= @application[:domains].first %>.crt;
-  ssl_certificate_key /etc/ssl/<%= @application[:domains].first %>.key;
-  <% if @application[:ssl_configuration][:chain] -%>
-  ssl_client_certificate /etc/ssl/<%= @application[:domains].first %>.ca;
+  ssl_certificate <%= @ssl_crt %>;
+  ssl_certificate_key <%= @ssl_key %>;
+  <% if @ssl_ca -%>
+  ssl_client_certificate <%= @ssl_ca %>;
   <% end -%>
   <% end -%>
 
