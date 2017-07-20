@@ -165,7 +165,7 @@ search("aws_opsworks_app").each do |app|
       variables :key => app['ssl_configuration']['certificate']
       notifies :run, "execute[check-nginx]"
       only_if do
-        app['enable_ssl']
+        app['enable_ssl'] && app['ssl_configuration']['certificate']
       end
     end
 
@@ -175,7 +175,7 @@ search("aws_opsworks_app").each do |app|
       variables :key => app['ssl_configuration']['private_key']
       notifies :run, "execute[check-nginx]"
       only_if do
-        app['enable_ssl']
+        app['enable_ssl'] && app['ssl_configuration']['private_key']
       end
     end
 
