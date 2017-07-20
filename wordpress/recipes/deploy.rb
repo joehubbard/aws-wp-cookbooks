@@ -1,7 +1,5 @@
 user = 'ubuntu'
 
-
-
 search("aws_opsworks_app").each do |app|
 
   if app['deploy']
@@ -9,9 +7,9 @@ search("aws_opsworks_app").each do |app|
     db = node['deploy']['wp']['database']
     domains = app['domains'].join(" ")
     protocol = app['enable_ssl'] ? ('https') : ('http');
-    wp_home =  "#{app['environment']['WP_HOME']}";
+    wp_home =  app['environment']['WP_HOME'];
     if app['environment']['MULTISITE']
-      site_url = "#{wp_home}"
+      site_url = wp_home
     else
       site_url = "#{wp_home}/wp"
     end
