@@ -213,6 +213,24 @@ search("aws_opsworks_app").each do |app|
       command "nginx -t"
       action :nothing
     end
+    
+    template "/home/root/.aws/credentials" do
+      source "aws-credentials.erb"
+      owner "root"
+      group "www-data"
+      mode "640"
+      variables(
+        :aws_access_key => app['environment']['AWS_ACCESS_KEY'],
+        :aws_access_secret_key => app['environment']['AWS_ACCESS_SECRET_KEY'],
+      )
+    end
+    
+    template "/etc/logrotate.d/nginx" do
+      source "logrotate-nginx.erb"
+      owner "root"
+      group "www-data"
+      mode "755"
+    end
 
   end
 
