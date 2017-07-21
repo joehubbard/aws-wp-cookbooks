@@ -45,7 +45,7 @@ search("aws_opsworks_app").each do |app|
       mode 00400
       action [:delete, :create]
     end
-    
+
     execute "ssh-scan" do
       command "touch /home/#{user}/.ssh/known_hosts; ssh-keygen -f /home/#{user}/.ssh/known_hosts -R gitlab.com; ssh-keyscan -t rsa gitlab.com >> /home/#{user}/.ssh/known_hosts"
       end
@@ -96,7 +96,7 @@ search("aws_opsworks_app").each do |app|
         :gmaps_api_key => "#{app['environment']['GMAPS_API_KEY']}"
       )
     end
-    
+
     link "#{current_link}" do
       action :delete
     end
@@ -125,7 +125,7 @@ search("aws_opsworks_app").each do |app|
       command "npm run production"
       only_if { File.exists?("#{theme_dir}webpack.mix.js") }
     end
-    
+
     execute "bower-install" do
       cwd "#{theme_dir}"
       command "bower install --allow-root"
@@ -149,7 +149,7 @@ search("aws_opsworks_app").each do |app|
     execute "change-ownership" do
       command "chown -R www-data:www-data #{release_dir}"
     end
-    
+
     directory "/etc/ssl" do
       action :create
       owner "root"
@@ -213,7 +213,7 @@ search("aws_opsworks_app").each do |app|
       command "nginx -t"
       action :nothing
     end
-    
+
     template "/home/root/.aws/credentials" do
       source "aws-credentials.erb"
       owner "root"
@@ -223,8 +223,11 @@ search("aws_opsworks_app").each do |app|
         :aws_access_key => app['environment']['AWS_ACCESS_KEY'],
         :aws_access_secret_key => app['environment']['AWS_ACCESS_SECRET_KEY']
       )
+      only_if do
+        app['environment']['AWS_ACCESS_KEY'] && app['environment']['AWS_ACCESS_SECRET_KEY']
+      end
     end
-    
+
     template "/etc/logrotate.d/nginx" do
       source "logrotate-nginx.erb"
       owner "root"
