@@ -1,0 +1,15 @@
+/var/log/nginx/log {
+  create 0644 www-data www-data
+  daily
+  rotate 10
+  dateext
+  dateformat -%Y-%m-%d
+  missingok
+  notifempty
+  compress
+  sharedscripts
+  postrotate
+  /etc/init.d/nginx reopen_logs
+  aws s3 sync --acl bucket-owner-full-control --profile=wordpress_logs --exclude '' --include '*.gz' /var/log/nginx/. s3://carsnip-live-logs/wordpress/
+  endscript
+}
