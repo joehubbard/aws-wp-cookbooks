@@ -221,7 +221,7 @@ search("aws_opsworks_app").each do |app|
       mode "640"
       variables(
         :aws_access_key => app['environment']['AWS_ACCESS_KEY'],
-        :aws_access_secret_key => app['environment']['AWS_ACCESS_SECRET_KEY'],
+        :aws_access_secret_key => app['environment']['AWS_ACCESS_SECRET_KEY']
       )
     end
     
@@ -229,7 +229,8 @@ search("aws_opsworks_app").each do |app|
       source "logrotate-nginx.erb"
       owner "root"
       group "www-data"
-      mode "755"
+      mode "0644"
+      action [:delete, :create]
     end
 
   end
