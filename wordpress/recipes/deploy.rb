@@ -149,10 +149,10 @@ search("aws_opsworks_app").each do |app|
     end
 
     directory "/etc/ssl" do
-      action :create
+      action [:delete, :create]
       owner "root"
       group "root"
-      mode 0600
+      mode 0644
     end
 
     template "/etc/ssl/#{app['domains'].first}.crt" do
