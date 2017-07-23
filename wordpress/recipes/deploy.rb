@@ -19,7 +19,6 @@ search("aws_opsworks_app").each do |app|
     time =  Time.new.strftime("%Y%m%d%H%M%S")
     release_dir = "#{site_root}releases/#{time}/"
     theme_dir = "#{release_dir}web/app/themes/#{app['environment']['THEME_NAME']}/"
-    app_db = app['data_sources'].first
 
     count_command = "ls -l #{site_root}releases/ | grep ^d | wc -l"
     directory_count = shell_out(count_command)
@@ -121,19 +120,19 @@ search("aws_opsworks_app").each do |app|
     end
 
     execute "webpack-install" do
-      cwd "#{theme_dir}"
+      cwd "#{site_root}current/web"
       command "npm run production"
       only_if { File.exists?("#{theme_dir}webpack.mix.js") }
     end
 
     execute "bower-install" do
-      cwd "#{theme_dir}"
+      cwd "#{site_root}current/web"
       command "bower install --allow-root"
       only_if { File.exists?("#{theme_dir}bower.js") }
     end
 
     execute "gulp-production" do
-      cwd "#{theme_dir}"
+      cwd "#{site_root}current/web"
       command "gulp --production"
       only_if { File.exists?("#{theme_dir}gulpfile.js") }
     end
