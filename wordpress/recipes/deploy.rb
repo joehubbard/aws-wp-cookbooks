@@ -153,9 +153,6 @@ search("aws_opsworks_app").each do |app|
       owner "root"
       group "root"
       mode 2744
-      only_if do
-        app['enable_ssl']
-      end
     end
 
     template "/etc/ssl/#{app['domains'].first}.crt" do
