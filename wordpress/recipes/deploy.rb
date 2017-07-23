@@ -226,13 +226,13 @@ search("aws_opsworks_app").each do |app|
     #  end
     #end
 
-    #template "/etc/logrotate.d/nginx" do
-    #  source "logrotate-nginx.erb"
-    #  owner "root"
-    #  group "www-data"
-    #  mode "0644"
-    #  action [:delete, :create]
-    #end
+    template "/etc/logrotate.d/nginx" do
+      source "logrotate-nginx.erb"
+      owner "root"
+      group "www-data"
+      mode "0644"
+      action [:delete, :create]
+    end
 
   end
 
