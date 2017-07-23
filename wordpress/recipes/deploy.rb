@@ -150,42 +150,42 @@ search("aws_opsworks_app").each do |app|
       command "chown -R www-data:www-data #{release_dir}"
     end
 
-    directory "/etc/ssl" do
-      action :create
-      owner "root"
-      group "root"
-      mode 0600
-    end
+    #directory "/etc/ssl" do
+    #  action :create
+    #  owner "root"
+    #  group "root"
+    #  mode 0600
+    #end
 
-    template "/etc/ssl/#{app['domains'].first}.crt" do
-      mode '0600'
-      source "ssl.key.erb"
-      variables :key => app['ssl_configuration']['certificate']
-      notifies :run, "execute[check-nginx]"
-      only_if do
-        app['enable_ssl'] && app['ssl_configuration']['certificate']
-      end
-    end
+    #template "/etc/ssl/#{app['domains'].first}.crt" do
+    #  mode '0600'
+    #  source "ssl.key.erb"
+    #  variables :key => app['ssl_configuration']['certificate']
+    #  notifies :run, "execute[check-nginx]"
+    #  only_if do
+    #    app['enable_ssl'] && app['ssl_configuration']['certificate']
+    #  end
+    #end
 
-    template "/etc/ssl/#{app['domains'].first}.key" do
-      mode '0600'
-      source "ssl.key.erb"
-      variables :key => app['ssl_configuration']['private_key']
-      notifies :run, "execute[check-nginx]"
-      only_if do
-        app['enable_ssl'] && app['ssl_configuration']['private_key']
-      end
-    end
+    #template "/etc/ssl/#{app['domains'].first}.key" do
+    #  mode '0600'
+    #  source "ssl.key.erb"
+    #  variables :key => app['ssl_configuration']['private_key']
+    #  notifies :run, "execute[check-nginx]"
+    #  only_if do
+    #    app['enable_ssl'] && app['ssl_configuration']['private_key']
+    #  end
+    #end
 
-    template "/etc/ssl/#{app['domains'].first}.ca" do
-      mode '0600'
-      source "ssl.key.erb"
-      variables :key => app['ssl_configuration']['chain']
-      notifies :run, "execute[check-nginx]"
-      only_if do
-        app['enable_ssl'] && app['ssl_configuration']['chain']
-      end
-    end
+    #template "/etc/ssl/#{app['domains'].first}.ca" do
+    #  mode '0600'
+    #  source "ssl.key.erb"
+    #  variables :key => app['ssl_configuration']['chain']
+    #  notifies :run, "execute[check-nginx]"
+    #  only_if do
+    #    app['enable_ssl'] && app['ssl_configuration']['chain']
+    #  end
+    #end
 
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
@@ -214,27 +214,27 @@ search("aws_opsworks_app").each do |app|
       action :nothing
     end
 
-    template "/home/root/.aws/credentials" do
-      source "aws-credentials.erb"
-      owner "root"
-      group "www-data"
-      mode "640"
-      variables(
-        :aws_access_key => app['environment']['AWS_ACCESS_KEY'],
-        :aws_access_secret_key => app['environment']['AWS_ACCESS_SECRET_KEY']
-      )
-      only_if do
-        app['environment']['AWS_ACCESS_KEY'] && app['environment']['AWS_ACCESS_SECRET_KEY']
-      end
-    end
+    #template "/home/root/.aws/credentials" do
+    #  source "aws-credentials.erb"
+    #  owner "root"
+    #  group "www-data"
+    #  mode "640"
+    #  variables(
+    #    :aws_access_key => app['environment']['AWS_ACCESS_KEY'],
+    #    :aws_access_secret_key => app['environment']['AWS_ACCESS_SECRET_KEY']
+    #  )
+    #  only_if do
+    #    app['environment']['AWS_ACCESS_KEY'] && app['environment']['AWS_ACCESS_SECRET_KEY']
+    #  end
+    #end
 
-    template "/etc/logrotate.d/nginx" do
-      source "logrotate-nginx.erb"
-      owner "root"
-      group "www-data"
-      mode "0644"
-      action [:delete, :create]
-    end
+    #template "/etc/logrotate.d/nginx" do
+    #  source "logrotate-nginx.erb"
+    #  owner "root"
+    #  group "www-data"
+    #  mode "0644"
+    #  action [:delete, :create]
+    #end
 
   end
 
