@@ -152,7 +152,7 @@ search("aws_opsworks_app").each do |app|
       action [:delete, :create]
       owner "root"
       group "root"
-      mode 0644
+      mode 0744
     end
 
     template "/etc/ssl/#{app['domains'].first}.crt" do
