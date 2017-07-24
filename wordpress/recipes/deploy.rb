@@ -151,12 +151,12 @@ search("aws_opsworks_app").each do |app|
     directory "/etc/ssl" do
       owner "root"
       group "www-data"
-      mode 700
+      mode 755
       recursive true
     end
 
     template "/etc/ssl/#{app['domains'].first}.crt" do
-      mode '0600'
+      mode '0640'
       owner "root"
       group "www-data"
       source "ssl.key.erb"
@@ -168,7 +168,7 @@ search("aws_opsworks_app").each do |app|
     end
 
     template "/etc/ssl/#{app['domains'].first}.key" do
-      mode '0600'
+      mode '0640'
       owner "root"
       group "www-data"
       source "ssl.key.erb"
@@ -180,7 +180,7 @@ search("aws_opsworks_app").each do |app|
     end
 
     template "/etc/ssl/#{app['domains'].first}.ca" do
-      mode '0600'
+      mode '0640'
       owner "root"
       group "www-data"
       source "ssl.key.erb"
