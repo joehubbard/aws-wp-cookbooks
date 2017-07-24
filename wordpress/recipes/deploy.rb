@@ -150,13 +150,15 @@ search("aws_opsworks_app").each do |app|
 
     directory "/etc/ssl" do
       owner "root"
-      group "root"
+      group "www-data"
       mode 700
       recursive true
     end
 
     template "/etc/ssl/#{app['domains'].first}.crt" do
       mode '0600'
+      owner "root"
+      group "www-data"
       source "ssl.key.erb"
       variables :key => app['ssl_configuration']['certificate']
       notifies :run, "execute[check-nginx]"
@@ -167,6 +169,8 @@ search("aws_opsworks_app").each do |app|
 
     template "/etc/ssl/#{app['domains'].first}.key" do
       mode '0600'
+      owner "root"
+      group "www-data"
       source "ssl.key.erb"
       variables :key => app['ssl_configuration']['private_key']
       notifies :run, "execute[check-nginx]"
@@ -177,6 +181,8 @@ search("aws_opsworks_app").each do |app|
 
     template "/etc/ssl/#{app['domains'].first}.ca" do
       mode '0600'
+      owner "root"
+      group "www-data"
       source "ssl.key.erb"
       variables :key => app['ssl_configuration']['chain']
       notifies :run, "execute[check-nginx]"
