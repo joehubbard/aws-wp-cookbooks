@@ -222,14 +222,14 @@ search("aws_opsworks_app").each do |app|
       recursive true
     end
     
-    directory "/home/root/.aws" do
+    directory "/root/.aws" do
       owner "root"
       group "root"
       mode 755
       recursive true
     end
 
-    template "/home/root/.aws/credentials" do
+    template "/root/.aws/credentials" do
       source "aws-credentials.erb"
       owner "root"
       group "www-data"
