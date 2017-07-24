@@ -161,7 +161,6 @@ search("aws_opsworks_app").each do |app|
       group "www-data"
       source "ssl.key.erb"
       variables :key => app['ssl_configuration']['certificate']
-      notifies :run, "execute[check-nginx]"
       only_if do
         app['enable_ssl'] && app['ssl_configuration']['certificate']
       end
@@ -173,7 +172,6 @@ search("aws_opsworks_app").each do |app|
       group "www-data"
       source "ssl.key.erb"
       variables :key => app['ssl_configuration']['private_key']
-      notifies :run, "execute[check-nginx]"
       only_if do
         app['enable_ssl'] && app['ssl_configuration']['private_key']
       end
@@ -185,7 +183,6 @@ search("aws_opsworks_app").each do |app|
       group "www-data"
       source "ssl.key.erb"
       variables :key => app['ssl_configuration']['chain']
-      notifies :run, "execute[check-nginx]"
       only_if do
         app['enable_ssl'] && app['ssl_configuration']['chain']
       end
