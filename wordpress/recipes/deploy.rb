@@ -215,9 +215,9 @@ search("aws_opsworks_app").each do |app|
       action :nothing
     end
 
-    template "/home/root/.aws/credentials" do
+    template "/home/#{user}/.aws/credentials" do
       source "aws-credentials.erb"
-      owner "root"
+      owner user
       group "www-data"
       mode "640"
       variables(
@@ -229,13 +229,13 @@ search("aws_opsworks_app").each do |app|
       end
     end
 
-    #template "/etc/logrotate.d/nginx" do
-    #  source "logrotate-nginx.erb"
-    #  owner "root"
-    #  group "www-data"
-    #  mode "0644"
-    #  action [:delete, :create]
-    #end
+    template "/etc/logrotate.d/nginx" do
+      source "logrotate-nginx.erb"
+      owner user
+      group "www-data"
+      mode "0644"
+      action [:delete, :create]
+    end
 
   end
 
