@@ -59,6 +59,10 @@ if !Dir.exists?("#{healthcheck_root}")
     action :install
   end
   
+  apt_package "awscli" do
+    action :install
+  end
+  
   apt_package "aspell" do
     action :install
   end
