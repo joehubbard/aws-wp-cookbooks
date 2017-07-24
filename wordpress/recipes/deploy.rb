@@ -215,19 +215,19 @@ search("aws_opsworks_app").each do |app|
       action :nothing
     end
 
-    #template "/home/root/.aws/credentials" do
-    #  source "aws-credentials.erb"
-    #  owner "root"
-    #  group "www-data"
-    #  mode "640"
-    #  variables(
-    #    :aws_access_key => app['environment']['AWS_ACCESS_KEY'],
-    #    :aws_access_secret_key => app['environment']['AWS_ACCESS_SECRET_KEY']
-    #  )
-    #  only_if do
-    #    app['environment']['AWS_ACCESS_KEY'] && app['environment']['AWS_ACCESS_SECRET_KEY']
-    #  end
-    #end
+    template "/home/root/.aws/credentials" do
+      source "aws-credentials.erb"
+      owner "root"
+      group "www-data"
+      mode "640"
+      variables(
+        :aws_access_key => app['environment']['AWS_ACCESS_KEY'],
+        :aws_access_secret_key => app['environment']['AWS_ACCESS_SECRET_KEY']
+      )
+      only_if do
+        app['environment']['AWS_ACCESS_KEY'] && app['environment']['AWS_ACCESS_SECRET_KEY']
+      end
+    end
 
     #template "/etc/logrotate.d/nginx" do
     #  source "logrotate-nginx.erb"
