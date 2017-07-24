@@ -214,10 +214,24 @@ search("aws_opsworks_app").each do |app|
       command "nginx -t"
       action :nothing
     end
+    
+    directory "/home/root" do
+      owner "root"
+      group "root"
+      mode 755
+      recursive true
+    end
+    
+    directory "/home/root/.aws" do
+      owner "root"
+      group "root"
+      mode 755
+      recursive true
+    end
 
-    template "/home/#{user}/.aws/credentials" do
+    template "/home/root/.aws/credentials" do
       source "aws-credentials.erb"
-      owner user
+      owner "root"
       group "www-data"
       mode "640"
       variables(
@@ -231,7 +245,7 @@ search("aws_opsworks_app").each do |app|
 
     template "/etc/logrotate.d/nginx" do
       source "logrotate-nginx.erb"
-      owner user
+      owner "root"
       group "www-data"
       mode "0644"
       action [:delete, :create]
