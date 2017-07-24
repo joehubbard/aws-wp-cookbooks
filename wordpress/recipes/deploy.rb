@@ -49,7 +49,7 @@ search("aws_opsworks_app").each do |app|
       end
 
     execute "ssh-git-clone" do
-      command "ssh-agent sh -c 'ssh-add /home/#{user}/.ssh/id_rsa; git clone -b #{app['app_source']['revision']} --single-branch #{app['app_source']['url']} #{release_dir}'"
+      command "ssh-agent sh -c 'ssh-add /home/#{user}/.ssh/id_rsa; ssh-add /home/root/.ssh/id_rsa; git clone -b #{app['app_source']['revision']} --single-branch #{app['app_source']['url']} #{release_dir}'"
     end
     # NEED ADDING FOR MULTIPLE INSTANCES
     #directory "#{release_dir}web/app/uploads" do
