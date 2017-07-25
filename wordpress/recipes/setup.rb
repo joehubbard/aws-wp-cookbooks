@@ -102,7 +102,19 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "php-redis" do
     action :install
   end
-
+  #Certbot Start
+  apt_package "software-properties-common" do
+    action :install
+  end
+  
+  apt_repository "certbot" do
+    uri "ppa:certbot/certbot"
+  end
+  
+  apt_package "python-certbot-nginx" do
+    action :install
+  end
+  #Certbot End
   execute "ssh-keyscan-gitlab" do
     command "ssh-keyscan gitlab.com >> ~/.ssh/known_hosts"
   end
