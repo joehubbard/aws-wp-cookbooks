@@ -149,7 +149,7 @@ search("aws_opsworks_app").each do |app|
       command "chown -R www-data:www-data #{release_dir}"
     end
     
-    if app['environment']['CERTBOT'] do
+    if app['environment']['CERTBOT']
       execute "certbot" do
         command "certbot certonly --webroot -w #{release_dir}/web -d #{domains_cert}"
       end
