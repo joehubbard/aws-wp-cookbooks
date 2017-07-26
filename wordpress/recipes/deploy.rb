@@ -163,10 +163,12 @@ search("aws_opsworks_app").each do |app|
         owner "root"
         group "root"
         source "htpasswd.erb"
-        variables (
+        notifies :run, "execute[check-nginx]"
+        variables(
           :http_auth_user => app['environment']['HTTP_AUTH_USER'],
           :http_auth_pass => app['environment']['HTTP_AUTH_PASS']
          )
+      end
     end  
       
     template "/etc/ssl/#{app['domains'].first}.crt" do
