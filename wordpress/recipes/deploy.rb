@@ -155,13 +155,6 @@ search("aws_opsworks_app").each do |app|
       end
     end
 
-    directory "/etc/ssl" do
-      owner "root"
-      group "www-data"
-      mode 755
-      recursive true
-    end
-
     template "/etc/ssl/#{app['domains'].first}.crt" do
       mode '0640'
       owner "root"
