@@ -167,7 +167,6 @@ search("aws_opsworks_app").each do |app|
           :http_auth_user => app['environment']['HTTP_AUTH_USER'],
           :http_auth_pass => app['environment']['HTTP_AUTH_PASS']
          )
-      end
     end  
       
     template "/etc/ssl/#{app['domains'].first}.crt" do
