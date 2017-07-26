@@ -19,6 +19,7 @@ search("aws_opsworks_app").each do |app|
     time =  Time.new.strftime("%Y%m%d%H%M%S")
     release_dir = "#{site_root}releases/#{time}/"
     theme_dir = "#{release_dir}web/app/themes/#{app['environment']['THEME_NAME']}/"
+    http_auth = false
 
     count_command = "ls -l #{site_root}releases/ | grep ^d | wc -l"
     directory_count = shell_out(count_command)
@@ -154,7 +155,21 @@ search("aws_opsworks_app").each do |app|
         command "certbot certonly --webroot -w #{release_dir}/web -d #{domains_cert}"
       end
     end
-
+    
+    if app['environment']['HTTP_AUTH_USER']
+      http_auth = true
+      template "/etc/nginx/htpasswd" do
+        mode '0640'
+        owner "root"
+        group "root"
+        source "htpasswd.erb"
+        variables (
+          :http_auth_user => app['environment']['HTTP_AUTH_USER'],
+          :http_auth_pass => app['environment']['HTTP_AUTH_PASS']
+         )
+      end
+    end  
+      
     template "/etc/ssl/#{app['domains'].first}.crt" do
       mode '0640'
       owner "root"
@@ -202,7 +217,8 @@ search("aws_opsworks_app").each do |app|
         :ssl_crt => "/etc/ssl/#{app['domains'].first}.crt",
         :ssl_key => "/etc/ssl/#{app['domains'].first}.key",
         :ssl_ca => "/etc/ssl/#{app['domains'].first}.ca",
-        :multisite => app['environment']['MULTISITE']
+        :multisite => app['environment']['MULTISITE'],
+        :http_auth => http_auth
       )
     end
 
