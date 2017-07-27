@@ -215,13 +215,7 @@ search("aws_opsworks_app").each do |app|
       
     end
     
-    if app['enable_ssl'] 
-      enable_ssl = true
-    else
-      enable_ssl = false
-    end
-      
-    if app['environment']['CERTBOT']
+    if app['enable_ssl'] | app['environment']['CERTBOT']
       enable_ssl = true
     else
       enable_ssl = false
