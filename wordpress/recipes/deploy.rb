@@ -160,8 +160,8 @@ search("aws_opsworks_app").each do |app|
       http_auth = true
       template "/etc/nginx/htpasswd" do
         mode '0640'
-        owner "root"
-        group "root"
+        owner "www-data"
+        group "www-data"
         source "htpasswd.erb"
         notifies :run, "execute[check-nginx]"
         variables(
