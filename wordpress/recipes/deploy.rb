@@ -156,20 +156,20 @@ search("aws_opsworks_app").each do |app|
       end
     end
     
-    #if app['environment']['HTTP_AUTH_USER']
-    #  http_auth = true
-    #  template "/etc/nginx/htpasswd" do
-    #    mode '0640'
-    #    owner "root"
-    #    group "root"
-    #    source "htpasswd.erb"
-    #    notifies :run, "execute[check-nginx]"
-    #    variables(
-    #      :http_auth_user => app['environment']['HTTP_AUTH_USER'],
-    #      :http_auth_pass => app['environment']['HTTP_AUTH_PASS']
-    #     )
-    #  end
-    #end  
+    if app['environment']['HTTP_AUTH_USER']
+      http_auth = true
+      template "/etc/nginx/htpasswd" do
+        mode '0640'
+        owner "root"
+        group "root"
+        source "htpasswd.erb"
+        notifies :run, "execute[check-nginx]"
+        variables(
+          :http_auth_user => app['environment']['HTTP_AUTH_USER'],
+          :http_auth_pass => app['environment']['HTTP_AUTH_PASS']
+         )
+      end
+    end  
       
     template "/etc/ssl/#{app['domains'].first}.crt" do
       mode '0640'
