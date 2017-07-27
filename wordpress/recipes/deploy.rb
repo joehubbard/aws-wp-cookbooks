@@ -152,7 +152,7 @@ search("aws_opsworks_app").each do |app|
     
     if app['environment']['CERTBOT']
       execute "certbot" do
-        command "certbot certonly --webroot -w #{release_dir}/web -d #{domains_cert}"
+        command "certbot certonly --webroot -w #{release_dir}/web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
       end
     end
     
