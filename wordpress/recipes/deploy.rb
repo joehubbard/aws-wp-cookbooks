@@ -14,6 +14,9 @@ search("aws_opsworks_app").each do |app|
     else
       site_url = "#{wp_home}/wp"
     end
+    if app['environment']['WP_SITE_URL']
+      site_url = app['environment']['WP_SITE_URL']
+    end
     site_root = "/var/www/#{app['shortname']}/"
     shared_dir = "/efs/#{app['shortname']}/shared/"
     current_link = "#{site_root}current"
