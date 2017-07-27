@@ -5,8 +5,7 @@ search("aws_opsworks_app").each do |app|
   if app['deploy']
 
     db = node['deploy']['wp']['database']
-    domains = app['domains'].join(" ")
-    domains = domains.pop()
+    domains = app['domains'].pop().join(" ")
     domains_cert = app['domains'].join(" -d ")
     wp_home =  app['environment']['WP_HOME']
     if app['environment']['MULTISITE']
