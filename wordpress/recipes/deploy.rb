@@ -166,7 +166,7 @@ search("aws_opsworks_app").each do |app|
         notifies :run, "execute[check-nginx]"
         variables(
           :http_auth_user => app['environment']['HTTP_AUTH_USER'],
-          :http_auth_pass => app['environment']['HTTP_AUTH_PASS']
+          :http_auth_pass => Base64::encode(app['environment']['HTTP_AUTH_PASS'])
          )
       end
     end  
