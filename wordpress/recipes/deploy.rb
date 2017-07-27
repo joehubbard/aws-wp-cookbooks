@@ -178,7 +178,7 @@ search("aws_opsworks_app").each do |app|
       end
     end  
     
-    if app['enable_ssl']
+    if app['enable_ssl'] == true
       
       template "/etc/ssl/#{app['domains'].first}.crt" do
         mode '0640'
