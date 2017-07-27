@@ -213,6 +213,18 @@ search("aws_opsworks_app").each do |app|
       ssl_ca => "/etc/ssl/#{app['domains'].first}.ca"
       
     end
+    
+    if app['enable_ssl'] 
+      enable_ssl = true
+    else
+      enable_ssl = false
+    end
+      
+    if app['environment']['CERTBOT']
+      enable_ssl = true
+    else
+      enable_ssl = false
+    end
 
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
@@ -224,7 +236,7 @@ search("aws_opsworks_app").each do |app|
         :web_root => "#{site_root}current/web",
         :domains => domains,
         :app_name => app['shortname'],
-        :enable_ssl => (app['enable_ssl'] | app['environment']['CERTBOT']) : true ? false,
+        :enable_ssl => enable_ssl,
         :ssl_crt => "/etc/ssl/#{app['domains'].first}.crt",
         :ssl_key => "/etc/ssl/#{app['domains'].first}.key",
         :ssl_ca => "/etc/ssl/#{app['domains'].first}.ca",
