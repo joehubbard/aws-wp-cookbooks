@@ -151,18 +151,6 @@ search("aws_opsworks_app").each do |app|
       command "chown -R www-data:www-data #{release_dir}"
     end
     
-    if app['environment']['CERTBOT']
-      
-      execute "certbot" do
-        command "certbot certonly --webroot -w #{release_dir}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
-      end
-      
-      ssl_crt = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
-      ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
-      ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
-      
-    end
-    
     if app['environment']['HTTP_AUTH_USER']
       http_auth = true
       template "/etc/nginx/htpasswd" do
@@ -216,6 +204,18 @@ search("aws_opsworks_app").each do |app|
       ssl_crt = "/etc/ssl/#{app['domains'].first}.crt",
       ssl_key = "/etc/ssl/#{app['domains'].first}.key",
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
+      
+    end
+    
+    if app['environment']['CERTBOT']
+      
+      execute "certbot" do
+        command "certbot certonly --webroot -w #{release_dir}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
+      end
+      
+      ssl_crt = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
+      ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
+      ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
       
     end
     
