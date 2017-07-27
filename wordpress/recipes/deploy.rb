@@ -155,6 +155,9 @@ search("aws_opsworks_app").each do |app|
       execute "certbot" do
         command "certbot certonly --webroot -w #{release_dir}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
       end
+      ssl_crt => "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
+      ssl_key => "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
+      ssl_ca => "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
     end
     
     if app['environment']['HTTP_AUTH_USER']
@@ -171,38 +174,44 @@ search("aws_opsworks_app").each do |app|
          )
       end
     end  
+    
+    if app['enable_ssl']
+      template "/etc/ssl/#{app['domains'].first}.crt" do
+        mode '0640'
+        owner "root"
+        group "www-data"
+        source "ssl.key.erb"
+        variables :key => app['ssl_configuration']['certificate']
+        only_if do
+          app['enable_ssl'] && app['ssl_configuration']['certificate']
+        end
+      end
+
+      template "/etc/ssl/#{app['domains'].first}.key" do
+        mode '0640'
+        owner "root"
+        group "www-data"
+        source "ssl.key.erb"
+        variables :key => app['ssl_configuration']['private_key']
+        only_if do
+          app['enable_ssl'] && app['ssl_configuration']['private_key']
+        end
+      end
+
+      template "/etc/ssl/#{app['domains'].first}.ca" do
+        mode '0640'
+        owner "root"
+        group "www-data"
+        source "ssl.key.erb"
+        variables :key => app['ssl_configuration']['chain']
+        only_if do
+          app['enable_ssl'] && app['ssl_configuration']['chain']
+        end
+      end
+      ssl_crt => "/etc/ssl/#{app['domains'].first}.crt",
+      ssl_key => "/etc/ssl/#{app['domains'].first}.key",
+      ssl_ca => "/etc/ssl/#{app['domains'].first}.ca"
       
-    template "/etc/ssl/#{app['domains'].first}.crt" do
-      mode '0640'
-      owner "root"
-      group "www-data"
-      source "ssl.key.erb"
-      variables :key => app['ssl_configuration']['certificate']
-      only_if do
-        app['enable_ssl'] && app['ssl_configuration']['certificate']
-      end
-    end
-
-    template "/etc/ssl/#{app['domains'].first}.key" do
-      mode '0640'
-      owner "root"
-      group "www-data"
-      source "ssl.key.erb"
-      variables :key => app['ssl_configuration']['private_key']
-      only_if do
-        app['enable_ssl'] && app['ssl_configuration']['private_key']
-      end
-    end
-
-    template "/etc/ssl/#{app['domains'].first}.ca" do
-      mode '0640'
-      owner "root"
-      group "www-data"
-      source "ssl.key.erb"
-      variables :key => app['ssl_configuration']['chain']
-      only_if do
-        app['enable_ssl'] && app['ssl_configuration']['chain']
-      end
     end
 
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
@@ -215,7 +224,7 @@ search("aws_opsworks_app").each do |app|
         :web_root => "#{site_root}current/web",
         :domains => domains,
         :app_name => app['shortname'],
-        :enable_ssl => app['enable_ssl'],
+        :enable_ssl => (app['enable_ssl'] | app['environment']['CERTBOT']) : true ? false,
         :ssl_crt => "/etc/ssl/#{app['domains'].first}.crt",
         :ssl_key => "/etc/ssl/#{app['domains'].first}.key",
         :ssl_ca => "/etc/ssl/#{app['domains'].first}.ca",
