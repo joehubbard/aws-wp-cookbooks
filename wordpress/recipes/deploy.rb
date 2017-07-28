@@ -220,6 +220,13 @@ search("aws_opsworks_app").each do |app|
       ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
       ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
       
+      template "/etc/cron.daily/certbot" do
+        source "daily-cron.erb"
+        owner "root"
+        group "root"
+        mode "644"
+      end
+      
     end
     
     if app['enable_ssl'] | app['environment']['CERTBOT']
