@@ -169,13 +169,6 @@ search("aws_opsworks_app").each do |app|
       end
     end  
     
-    http_auth = false
-    app_name = app['domains'].pop()
-    domains = app['domains'].join(" ")
-    domains_cert = app['domains'].join(" -d ")
-    site_root = "/var/www/#{app['shortname']}/"
-    shared_dir = "/efs/#{app['shortname']}/shared/"
-    current_link = "#{site_root}current/"
     enable_ssl = true
   
     if app['enable_ssl']
@@ -216,12 +209,14 @@ search("aws_opsworks_app").each do |app|
       ssl_cert = "/etc/ssl/#{app['domains'].first}.crt",
       ssl_key = "/etc/ssl/#{app['domains'].first}.key",
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
-      
+    else
+      enable_ssl = false  
     end
     
     if app['environment']['CERTBOT']
       
         if Dir.exist?("/etc/letsencrypt/live/#{app['domains'].first}")
+          
           execute "certbot" do
             command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
           end
@@ -236,11 +231,15 @@ search("aws_opsworks_app").each do |app|
             group "root"
             mode "644"
           end
+          
         else
+          
           ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
           ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
           ssl_ca = false
+          
         end
+      
     else
       enable_ssl = false
     end
