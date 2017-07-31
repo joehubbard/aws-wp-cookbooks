@@ -169,6 +169,40 @@ search("aws_opsworks_app").each do |app|
       end
     end  
     
+    template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
+      source "nginx-wordpress.conf.erb"
+      owner "root"
+      group "www-data"
+      mode "640"
+      notifies :run, "execute[check-nginx]"
+      variables(
+        :web_root => "#{site_root}current/web",
+        :domains => domains,
+        :app_name => app['shortname'],
+        :enable_ssl => enable_ssl,
+        :ssl_crt => "/etc/ssl/#{app['domains'].first}.crt",
+        :ssl_key => "/etc/ssl/#{app['domains'].first}.key",
+        :ssl_ca => "/etc/ssl/#{app['domains'].first}.ca",
+        :multisite => app['environment']['MULTISITE'],
+        :http_auth => http_auth
+      )
+    end
+
+    link "/etc/nginx/sites-enabled/nginx-#{app['shortname']}.conf" do
+      to "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf"
+    end
+
+    execute "check-nginx" do
+      command "nginx -t"
+      action :nothing
+    end
+    
+    if app['enable_ssl'] | app['environment']['CERTBOT']
+      enable_ssl = true
+    else
+      enable_ssl = false
+    end
+    
     if app['enable_ssl'] == true
       
       template "/etc/ssl/#{app['domains'].first}.crt" do
@@ -227,40 +261,6 @@ search("aws_opsworks_app").each do |app|
         mode "644"
       end
       
-    end
-    
-    if app['enable_ssl'] | app['environment']['CERTBOT']
-      enable_ssl = true
-    else
-      enable_ssl = false
-    end
-
-    template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
-      source "nginx-wordpress.conf.erb"
-      owner "root"
-      group "www-data"
-      mode "640"
-      notifies :run, "execute[check-nginx]"
-      variables(
-        :web_root => "#{site_root}current/web",
-        :domains => domains,
-        :app_name => app['shortname'],
-        :enable_ssl => enable_ssl,
-        :ssl_crt => "/etc/ssl/#{app['domains'].first}.crt",
-        :ssl_key => "/etc/ssl/#{app['domains'].first}.key",
-        :ssl_ca => "/etc/ssl/#{app['domains'].first}.ca",
-        :multisite => app['environment']['MULTISITE'],
-        :http_auth => http_auth
-      )
-    end
-
-    link "/etc/nginx/sites-enabled/nginx-#{app['shortname']}.conf" do
-      to "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf"
-    end
-
-    execute "check-nginx" do
-      command "nginx -t"
-      action :nothing
     end
     
     directory "/home/root" do
