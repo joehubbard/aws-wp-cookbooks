@@ -170,9 +170,69 @@ search("aws_opsworks_app").each do |app|
     end  
     
     enable_ssl = true
-    ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-    ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
-    ssl_ca = false
+    if app['enable_ssl']
+      
+      template "/etc/ssl/#{app['domains'].first}.crt" do
+        mode '0640'
+        owner "root"
+        group "www-data"
+        source "ssl.key.erb"
+        variables :key => app['ssl_configuration']['certificate']
+        only_if do
+          app['enable_ssl'] && app['ssl_configuration']['certificate']
+        end
+      end
+
+      template "/etc/ssl/#{app['domains'].first}.key" do
+        mode '0640'
+        owner "root"
+        group "www-data"
+        source "ssl.key.erb"
+        variables :key => app['ssl_configuration']['private_key']
+        only_if do
+          app['enable_ssl'] && app['ssl_configuration']['private_key']
+        end
+      end
+
+      template "/etc/ssl/#{app['domains'].first}.ca" do
+        mode '0640'
+        owner "root"
+        group "www-data"
+        source "ssl.key.erb"
+        variables :key => app['ssl_configuration']['chain']
+        only_if do
+          app['enable_ssl'] && app['ssl_configuration']['chain']
+        end
+      end
+      
+      ssl_cert = "/etc/ssl/#{app['domains'].first}.crt",
+      ssl_key = "/etc/ssl/#{app['domains'].first}.key",
+      ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
+      
+    elseif app['environment']['CERTBOT']
+      
+        if Dir.exist?('/etc/letsencrypt/live/#{app['domains'].first}')
+          execute "certbot" do
+            command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
+          end
+
+          ssl_cert = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
+          ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
+          ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
+
+          template "/etc/cron.daily/certbot" do
+            source "daily-cron.erb"
+            owner "root"
+            group "root"
+            mode "644"
+          end
+        else
+          ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+          ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
+          ssl_ca = false
+        end
+      
+    end
     
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
