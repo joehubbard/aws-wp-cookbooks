@@ -94,7 +94,7 @@ search("aws_opsworks_app").each do |app|
         :enable_ssl => enable_ssl,
         :ssl_key => ssl_key,
         :ssl_ca => ssl_ca,
-        :test => "#{test}",
+        :test => "#{test[0]}",
         :multisite => app['environment']['MULTISITE'],
         :http_auth => http_auth
       )
