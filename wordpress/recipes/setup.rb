@@ -18,6 +18,10 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "subversion" do
     action :install
   end
+  
+  apt_package "ssl-cert" do
+    action :install
+  end
 
   apt_package "php-fpm" do
     action :install
