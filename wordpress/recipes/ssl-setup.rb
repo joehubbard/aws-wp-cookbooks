@@ -13,7 +13,7 @@ search("aws_opsworks_app").each do |app|
     shared_dir = "/efs/#{app['shortname']}/shared/"
     current_link = "#{site_root}current/"
   
-    if app['enable_ssl'] == true
+    if app['enable_ssl']
       
       template "/etc/ssl/#{app['domains'].first}.crt" do
         mode '0640'
@@ -84,9 +84,9 @@ search("aws_opsworks_app").each do |app|
         :domains => domains,
         :app_name => app['shortname'],
         :enable_ssl => enable_ssl,
-        :ssl_crt => "/etc/ssl/#{app['domains'].first}.crt",
-        :ssl_key => "/etc/ssl/#{app['domains'].first}.key",
-        :ssl_ca => "/etc/ssl/#{app['domains'].first}.ca",
+        :ssl_crt => ssl_crt,
+        :ssl_key => ssl_key,
+        :ssl_ca => ssl_ca,
         :multisite => app['environment']['MULTISITE'],
         :http_auth => http_auth
       )
