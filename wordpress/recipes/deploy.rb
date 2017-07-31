@@ -211,7 +211,7 @@ search("aws_opsworks_app").each do |app|
       
     elseif app['environment']['CERTBOT']
       
-        if Dir.exist?('/etc/letsencrypt/live/#{app['domains'].first}')
+        if Dir.exist?("/etc/letsencrypt/live/#{app['domains'].first}")
           execute "certbot" do
             command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
           end
