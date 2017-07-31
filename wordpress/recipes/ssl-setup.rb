@@ -10,7 +10,7 @@ search("aws_opsworks_app").each do |app|
     domains = app['domains'].join(" ")
     site_root = "/var/www/#{app['shortname']}/"
     shared_dir = "/efs/#{app['shortname']}/shared/"
-    current_link = "#{site_root}current"
+    current_link = "#{site_root}current/"
   
     if app['enable_ssl'] == true
       
@@ -56,7 +56,7 @@ search("aws_opsworks_app").each do |app|
     if app['environment']['CERTBOT']
       
       execute "certbot" do
-        command "certbot certonly --webroot -w #{release_dir}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
+        command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
       end
       
       ssl_crt = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
