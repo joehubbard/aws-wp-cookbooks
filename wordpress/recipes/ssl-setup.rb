@@ -75,7 +75,9 @@ search("aws_opsworks_app").each do |app|
           ssl_ca = false
         end
     else
-      enable_ssl = false
+      ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+      ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
+      ssl_ca = false
     end
     
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
