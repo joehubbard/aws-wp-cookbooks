@@ -176,6 +176,7 @@ search("aws_opsworks_app").each do |app|
     site_root = "/var/www/#{app['shortname']}/"
     shared_dir = "/efs/#{app['shortname']}/shared/"
     current_link = "#{site_root}current/"
+    enable_ssl = true
   
     if app['enable_ssl']
       
@@ -241,9 +242,7 @@ search("aws_opsworks_app").each do |app|
           ssl_ca = false
         end
     else
-      ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-      ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
-      ssl_ca = false
+      enable_ssl = false
     end
     
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
