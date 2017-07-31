@@ -169,10 +169,6 @@ search("aws_opsworks_app").each do |app|
       end
     end  
     
-    enable_ssl = true
-    if app['deploy']
-    
-    enable_ssl = true
     http_auth = false
     app_name = app['domains'].pop()
     domains = app['domains'].join(" ")
