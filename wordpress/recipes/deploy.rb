@@ -169,7 +169,9 @@ search("aws_opsworks_app").each do |app|
       end
     end  
     
-    enable_ssl = false
+    ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+    ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
+    ssl_ca = false
     
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
@@ -182,9 +184,9 @@ search("aws_opsworks_app").each do |app|
         :domains => domains,
         :app_name => app['shortname'],
         :enable_ssl => enable_ssl,
-        :ssl_crt => "/etc/ssl/#{app['domains'].first}.crt",
-        :ssl_key => "/etc/ssl/#{app['domains'].first}.key",
-        :ssl_ca => "/etc/ssl/#{app['domains'].first}.ca",
+        :ssl_crrt => ssl_cert,
+        :ssl_key => ssl_key,
+        :ssl_ca => ssl_ca,
         :multisite => app['environment']['MULTISITE'],
         :http_auth => http_auth
       )
