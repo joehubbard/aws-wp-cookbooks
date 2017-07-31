@@ -169,6 +169,12 @@ search("aws_opsworks_app").each do |app|
       end
     end  
     
+    if app['enable_ssl'] | app['environment']['CERTBOT']
+      enable_ssl = true
+    else
+      enable_ssl = false
+    end
+    
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
       owner "root"
@@ -195,12 +201,6 @@ search("aws_opsworks_app").each do |app|
     execute "check-nginx" do
       command "nginx -t"
       action :nothing
-    end
-    
-    if app['enable_ssl'] | app['environment']['CERTBOT']
-      enable_ssl = true
-    else
-      enable_ssl = false
     end
     
     if app['enable_ssl'] == true
