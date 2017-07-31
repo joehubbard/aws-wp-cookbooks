@@ -8,6 +8,7 @@ search("aws_opsworks_app").each do |app|
     http_auth = false
     app_name = app['domains'].pop()
     domains = app['domains'].join(" ")
+    domains_cert = app['domains'].join(" -d ")
     site_root = "/var/www/#{app['shortname']}/"
     shared_dir = "/efs/#{app['shortname']}/shared/"
     current_link = "#{site_root}current/"
