@@ -67,7 +67,7 @@ server {
     try_files $uri $uri/ /index.php?q=$uri&$args;
   }
 
-  location .well-known {
+  location /.well-known {
     allow all;
     auth_basic off;
   }
