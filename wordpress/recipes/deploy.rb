@@ -169,6 +169,7 @@ search("aws_opsworks_app").each do |app|
       end
     end  
     
+    enable_ssl = true
     ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
     ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
     ssl_ca = false
