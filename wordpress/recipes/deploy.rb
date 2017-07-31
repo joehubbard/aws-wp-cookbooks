@@ -169,11 +169,7 @@ search("aws_opsworks_app").each do |app|
       end
     end  
     
-    if app['enable_ssl'] | app['environment']['CERTBOT']
-      enable_ssl = true
-    else
-      enable_ssl = false
-    end
+    enable_ssl = false
     
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
