@@ -52,24 +52,28 @@ search("aws_opsworks_app").each do |app|
       ssl_key = "/etc/ssl/#{app['domains'].first}.key",
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
       
-    end
-    
-    if app['environment']['CERTBOT']
+      elseif app['environment']['CERTBOT']
       
-      execute "certbot" do
-        command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
-      end
-      
-      ssl_cert = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
-      ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
-      ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
-      
-      template "/etc/cron.daily/certbot" do
-        source "daily-cron.erb"
-        owner "root"
-        group "root"
-        mode "644"
-      end
+        if Dir.exist?('/etc/letsencrypt/live/#{app['domains'].first}')
+          execute "certbot" do
+            command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
+          end
+
+          ssl_cert = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
+          ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
+          ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
+
+          template "/etc/cron.daily/certbot" do
+            source "daily-cron.erb"
+            owner "root"
+            group "root"
+            mode "644"
+          end
+        else
+          ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+          ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
+          ssl_ca = false
+        end
       
     end
     
