@@ -3,8 +3,16 @@ user = 'ubuntu'
 search("aws_opsworks_app").each do |app|
 
   if app['deploy']
+    
+    enable_ssl = true
+    http_auth = false
+    app_name = app['domains'].pop()
+    domains = app['domains'].join(" ")
+    site_root = "/var/www/#{app['shortname']}/"
+    shared_dir = "/efs/#{app['shortname']}/shared/"
+    current_link = "#{site_root}current"
   
-        if app['enable_ssl'] == true
+    if app['enable_ssl'] == true
       
       template "/etc/ssl/#{app['domains'].first}.crt" do
         mode '0640'
@@ -63,10 +71,6 @@ search("aws_opsworks_app").each do |app|
       end
       
     end
-    
-    enable_ssl = true
-    app_name = app['domains'].pop()
-    domains = app['domains'].join(" ")
     
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
