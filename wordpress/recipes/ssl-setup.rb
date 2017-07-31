@@ -52,7 +52,9 @@ search("aws_opsworks_app").each do |app|
       ssl_key = "/etc/ssl/#{app['domains'].first}.key",
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
       
-      elseif app['environment']['CERTBOT']
+    end
+    
+    if app['environment']['CERTBOT']
       
         if Dir.exist?("/etc/letsencrypt/live/#{app['domains'].first}")
           execute "certbot" do
