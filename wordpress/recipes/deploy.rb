@@ -232,6 +232,9 @@ search("aws_opsworks_app").each do |app|
           ssl_ca = false
         end
       
+    else
+      enable_ssl = false
+      
     end
     
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
