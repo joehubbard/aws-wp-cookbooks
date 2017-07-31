@@ -48,7 +48,7 @@ search("aws_opsworks_app").each do |app|
         end
       end
       
-      ssl_cert = "/etc/ssl/#{app['domains'].first}.crt",
+      cert = "/etc/ssl/#{app['domains'].first}.crt",
       ssl_key = "/etc/ssl/#{app['domains'].first}.key",
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
 
@@ -62,7 +62,7 @@ search("aws_opsworks_app").each do |app|
             command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
           end
 
-          ssl_cert = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
+          cert = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
           ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
           ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
 
@@ -74,7 +74,7 @@ search("aws_opsworks_app").each do |app|
           end
         else
           Chef::Log.debug("Use default keys")
-          ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
+          cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
           ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
           ssl_ca = false
         end
@@ -92,7 +92,7 @@ search("aws_opsworks_app").each do |app|
         :domains => domains,
         :app_name => app['shortname'],
         :enable_ssl => enable_ssl,
-        :ssl_certificate => ssl_cert,
+        :certificate => cert,
         :ssl_key => ssl_key,
         :ssl_ca => ssl_ca,
         :multisite => app['environment']['MULTISITE'],
