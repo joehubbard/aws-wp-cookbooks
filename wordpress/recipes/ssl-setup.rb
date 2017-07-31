@@ -51,7 +51,8 @@ search("aws_opsworks_app").each do |app|
       ssl_cert = "/etc/ssl/#{app['domains'].first}.crt",
       ssl_key = "/etc/ssl/#{app['domains'].first}.key",
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
-      
+    else
+      enable_ssl = false  
     end
     
     if app['environment']['CERTBOT']
@@ -77,9 +78,7 @@ search("aws_opsworks_app").each do |app|
           ssl_ca = false
         end
     else
-      ssl_cert = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-      ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
-      ssl_ca = false
+      enable_ssl = false
     end
     
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
