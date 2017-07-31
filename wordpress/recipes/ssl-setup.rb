@@ -22,7 +22,7 @@ search("aws_opsworks_app").each do |app|
         source "ssl.key.erb"
         variables :key => app['ssl_configuration']['certificate']
         only_if do
-          app['enable_ssl'] && app['ssl_configuration']['certificate']
+          app['enable_ssl']
         end
       end
 
@@ -33,7 +33,7 @@ search("aws_opsworks_app").each do |app|
         source "ssl.key.erb"
         variables :key => app['ssl_configuration']['private_key']
         only_if do
-          app['enable_ssl'] && app['ssl_configuration']['private_key']
+          app['enable_ssl']
         end
       end
 
@@ -44,7 +44,7 @@ search("aws_opsworks_app").each do |app|
         source "ssl.key.erb"
         variables :key => app['ssl_configuration']['chain']
         only_if do
-          app['enable_ssl'] && app['ssl_configuration']['chain']
+          app['enable_ssl']
         end
       end
       
