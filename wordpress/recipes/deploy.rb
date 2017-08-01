@@ -7,7 +7,7 @@ search("aws_opsworks_app").each do |app|
     db = node['deploy']['wp']['database']
     app_name = app['domains'].pop()
     domains = app['domains'].join(" ")
-    domains_cert = app['domains'].join(" -d ")
+    domains_cert = app['environment']['CERTBOT_DOMAINS'] ||= nil ? app['environment']['CERTBOT_DOMAINS'] : app['domains'].join(" -d ")
     wp_home =  app['environment']['WP_HOME']
     if app['environment']['MULTISITE']
       site_url = wp_home
@@ -216,6 +216,7 @@ search("aws_opsworks_app").each do |app|
         Chef::Log.debug("certbot is true, setup certbot")
         if Dir.exist?("/etc/letsencrypt/live/#{app['domains'].first}")
           Chef::Log.debug("letsencrypt folder exists")
+        else
           execute "certbot" do
             command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
           end
@@ -230,11 +231,7 @@ search("aws_opsworks_app").each do |app|
             group "root"
             mode "644"
           end
-        else
-          Chef::Log.debug("Use default keys")
-          test = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-          ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
-          ssl_ca = false
+        
         end
 
     end
