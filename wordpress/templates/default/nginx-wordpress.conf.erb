@@ -53,7 +53,7 @@ server {
     access_log off;
   }
 
-  location ~ /\. {
+  location ~ /\.(?!well-known).* {
     deny all;
   }
 
