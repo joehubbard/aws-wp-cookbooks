@@ -247,7 +247,7 @@ search("aws_opsworks_app").each do |app|
         :domains => domains,
         :app_name => app['shortname'],
         :enable_ssl => enable_ssl,
-        :test => "#{test[0]}",
+        :test => test[0] ||= nil ? test : "#{test[0]}",
         :ssl_key => ssl_key,
         :ssl_ca => ssl_ca,
         :multisite => app['environment']['MULTISITE'],
