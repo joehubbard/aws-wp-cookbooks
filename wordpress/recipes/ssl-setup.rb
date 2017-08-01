@@ -55,9 +55,7 @@ search("aws_opsworks_app").each do |app|
     end
     
     if app['environment']['CERTBOT']
-        Chef::Log.debug("certbot is true, setup certbot")
-        if Dir.exist?("/etc/letsencrypt/live/#{app['domains'].first}")
-          Chef::Log.debug("letsencrypt folder exists")
+      
           execute "certbot" do
             command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
           end
@@ -72,12 +70,6 @@ search("aws_opsworks_app").each do |app|
             group "root"
             mode "644"
           end
-        else
-          Chef::Log.debug("Use default keys")
-          test = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-          ssl_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
-          ssl_ca = false
-        end
 
     end
     
