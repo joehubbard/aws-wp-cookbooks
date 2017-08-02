@@ -60,7 +60,7 @@ search("aws_opsworks_app").each do |app|
             command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
           end
 
-          test = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
+          test = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem",
           ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
           ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
 
