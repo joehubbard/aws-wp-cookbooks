@@ -26,7 +26,7 @@ server {
   ssl_certificate_key <%= @ssl_key %>;
 
   <% if @ssl_ca -%>
-  ssl_client_certificate <%= @ssl_ca %>;
+  ssl_trusted_certificate <%= @ssl_ca %>;
   <% end -%>
   <% end -%>
 
