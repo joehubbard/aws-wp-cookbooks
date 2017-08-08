@@ -230,7 +230,7 @@ search("aws_opsworks_app").each do |app|
         
         end
       
-      test = "/etc/letsencrypt/live/#{app['domains'].first}/cert.pem",
+      test = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem",
       ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
       ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
 
