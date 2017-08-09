@@ -104,7 +104,7 @@ if !Dir.exists?("#{healthcheck_root}")
   mount '/var/ngx_pagespeed_cache' do
     pass     0
     fstype   'tmpfs'
-    device   'swap'
+    device   'tmpfs'
     options  'mode=775,size=500m'
     action   [:mount, :enable]
   end
