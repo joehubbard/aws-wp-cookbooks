@@ -69,7 +69,7 @@ if !Dir.exists?("#{healthcheck_root}")
   end
 
   bash "ps_dl_install" do
-    cwd "~"
+    cwd "/tmp"
     code <<-EOH
     NPS_VERSION=1.12.34.2-stable
     cd
