@@ -68,26 +68,29 @@ if !Dir.exists?("#{healthcheck_root}")
     command "sudo apt-get install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip -y"
   end
 
-  execute "ps_dl_install" do
-    command "NPS_VERSION=1.12.34.2-stable
-            cd
-            wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}.zip
-            unzip v${NPS_VERSION}.zip
-            cd ngx_pagespeed-${NPS_VERSION}/
-            NPS_RELEASE_NUMBER=${NPS_VERSION/beta/}
-            NPS_RELEASE_NUMBER=${NPS_VERSION/stable/}
-            psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_RELEASE_NUMBER}.tar.gz
-            [ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
-            wget ${psol_url}
-            tar -xzvf $(basename ${psol_url}) # extracts to psol/
-            NGINX_VERSION=1.10.1
-            cd
-            wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
-            tar -xvzf nginx-${NGINX_VERSION}.tar.gz
-            cd nginx-${NGINX_VERSION}/
-            ./configure --add-module=$HOME/ngx_pagespeed-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS}
-            make
-            sudo make install"
+  bash "ps_dl_install" do
+    cwd "~"
+    code <<-EOH
+    NPS_VERSION=1.12.34.2-stable
+    cd
+    wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}.zip
+    unzip v${NPS_VERSION}.zip
+    cd ngx_pagespeed-${NPS_VERSION}/
+    NPS_RELEASE_NUMBER=${NPS_VERSION/beta/}
+    NPS_RELEASE_NUMBER=${NPS_VERSION/stable/}
+    psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_RELEASE_NUMBER}.tar.gz
+    [ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
+    wget ${psol_url}
+    tar -xzvf $(basename ${psol_url}) # extracts to psol/
+    NGINX_VERSION=1.10.1
+    cd
+    wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+    tar -xvzf nginx-${NGINX_VERSION}.tar.gz
+    cd nginx-${NGINX_VERSION}/
+    ./configure --add-module=$HOME/ngx_pagespeed-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS}
+    make
+    sudo make install
+    EOH
   end
 
   directory "/var/ngx_pagespeed_cache" do
