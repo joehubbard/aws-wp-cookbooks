@@ -18,7 +18,7 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "subversion" do
     action :install
   end
-  
+
   apt_package "ssl-cert" do
     action :install
   end
@@ -38,7 +38,7 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "php-mbstring" do
     action :install
   end
-  
+
   apt_package "php7.0-gd" do
     action :install
   end
@@ -46,7 +46,7 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "php-mysql" do
     action :install
   end
-  
+
   apt_package "mysql-client" do
      action :install
   end
@@ -62,47 +62,91 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "php-apcu" do
     action :install
   end
-  
+
+  #Pagespeed Mod start
+  execute "ps_dependencies" do
+    command "sudo apt-get install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip -y"
+  end
+
+  execute "ps_dl_install" do
+    command "NPS_VERSION=1.12.34.2-stable
+            cd
+            wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}.zip
+            unzip v${NPS_VERSION}.zip
+            cd ngx_pagespeed-${NPS_VERSION}/
+            NPS_RELEASE_NUMBER=${NPS_VERSION/beta/}
+            NPS_RELEASE_NUMBER=${NPS_VERSION/stable/}
+            psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_RELEASE_NUMBER}.tar.gz
+            [ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
+            wget ${psol_url}
+            tar -xzvf $(basename ${psol_url}) # extracts to psol/
+            NGINX_VERSION=1.10.1
+            cd
+            wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+            tar -xvzf nginx-${NGINX_VERSION}.tar.gz
+            cd nginx-${NGINX_VERSION}/
+            ./configure --add-module=$HOME/ngx_pagespeed-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS}
+            make
+            sudo make install"
+  end
+
+  directory "/var/ngx_pagespeed_cache" do
+    owner "www-data"
+    group "www-data"
+    mode "2775"
+    action :create
+    recursive true
+  end
+
+  mount '/var/ngx_pagespeed_cache' do
+    pass     0
+    fstype   'tmpfs'
+    device   'swap'
+    options  'mode=775,size=500m'
+    action   [:mount, :enable]
+  end
+  #Pagespeed Mod stop
+
   apt_package "awscli" do
     action :install
   end
-  
+
   apt_package "aspell" do
     action :install
   end
-  
+
   apt_package "aspell-it" do
     action :install
   end
-  
+
   apt_package "aspell-es" do
     action :install
   end
-  
+
   apt_package "aspell-fr" do
     action :install
   end
-  
+
   apt_package "aspell-de" do
     action :install
   end
-  
+
   apt_package "sendmail" do
     action :install
   end
-  
+
   apt_package "npm" do
     action :install
   end
-  
+
   execute "npm-node-update" do
     command "sudo npm cache clean -f && sudo npm install -g n && sudo n stable"
   end
-  
+
   apt_package "redis-server" do
     action :install
   end
-  
+
   apt_package "php-redis" do
     action :install
   end
@@ -110,11 +154,11 @@ if !Dir.exists?("#{healthcheck_root}")
   apt_package "software-properties-common" do
     action :install
   end
-  
+
   apt_repository "certbot" do
     uri "ppa:certbot/certbot"
   end
-  
+
   apt_package "python-certbot-nginx" do
     action :install
   end
@@ -122,14 +166,14 @@ if !Dir.exists?("#{healthcheck_root}")
   execute "ssh-keyscan-gitlab" do
     command "ssh-keyscan gitlab.com >> ~/.ssh/known_hosts"
   end
-  
+
   execute "ssh-keyscan-github" do
     command "ssh-keyscan github.com >> ~/.ssh/known_hosts"
   end
-  
-#  execute "install-wp-cli" do
-#    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
-#  end
+
+  execute "install-wp-cli" do
+    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
+  end
 
   execute "install-composer" do
     command "curl -sS https://getcomposer.org/installer | php"
@@ -138,7 +182,7 @@ if !Dir.exists?("#{healthcheck_root}")
   execute "install-composer-globally" do
     command "mv composer.phar /usr/local/bin/composer"
   end
-  
+
   execute "npm-webpack" do
     command "npm install -g webpack"
   end
