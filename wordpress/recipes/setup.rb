@@ -83,7 +83,7 @@ if !Dir.exists?("#{healthcheck_root}")
     [ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
     wget ${psol_url}
     tar -xzvf $(basename ${psol_url}) # extracts to psol/
-    NGINX_VERSION=1.10.1
+    NGINX_VERSION=1.12.1
     cd /etc
     wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
     tar -xvzf nginx-${NGINX_VERSION}.tar.gz
