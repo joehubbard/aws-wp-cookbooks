@@ -7,9 +7,9 @@ if !Dir.exists?("#{healthcheck_root}")
     command "sudo usermod -a -G www-data #{user}"
   end
 
-  apt_package "nginx-extras" do
-    action :install
-  end
+  #apt_package "nginx-extras" do
+  #  action :install
+  #end
 
   apt_package "zip" do
     action :install
@@ -71,6 +71,7 @@ if !Dir.exists?("#{healthcheck_root}")
   bash "ps_dl_install" do
     cwd "/tmp"
     code <<-EOH
+    su ubuntu
     NPS_VERSION=1.12.34.2-stable
     cd
     wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}.zip
@@ -83,13 +84,15 @@ if !Dir.exists?("#{healthcheck_root}")
     wget ${psol_url}
     tar -xzvf $(basename ${psol_url}) # extracts to psol/
     NGINX_VERSION=1.10.1
-    cd
+    cd /etc
     wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
     tar -xvzf nginx-${NGINX_VERSION}.tar.gz
+    ln -s /etc/nginx-${NGINX_VERSION} /etc/nginx
     cd nginx-${NGINX_VERSION}/
     ./configure --add-module=$HOME/ngx_pagespeed-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS}
     make
     sudo make install
+    exit
     EOH
   end
 
@@ -104,7 +107,7 @@ if !Dir.exists?("#{healthcheck_root}")
   mount '/var/ngx_pagespeed_cache' do
     pass     0
     fstype   'tmpfs'
-    device   'swap'
+    device   'tmpfs'
     options  'mode=775,size=500m'
     action   [:mount, :enable]
   end
@@ -174,9 +177,9 @@ if !Dir.exists?("#{healthcheck_root}")
     command "ssh-keyscan github.com >> ~/.ssh/known_hosts"
   end
 
-  execute "install-wp-cli" do
-    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
-  end
+  #execute "install-wp-cli" do
+  #  command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
+  #end
 
   execute "install-composer" do
     command "curl -sS https://getcomposer.org/installer | php"
