@@ -206,8 +206,8 @@ search("aws_opsworks_app").each do |app|
         end
       end
       
-      test = "/etc/ssl/#{app['domains'].first}.crt",
-      ssl_key = "/etc/ssl/#{app['domains'].first}.key",
+      ssl_cert = "/etc/ssl/#{app['domains'].first}.crt"
+      ssl_key = "/etc/ssl/#{app['domains'].first}.key"
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
 
     end
@@ -230,8 +230,8 @@ search("aws_opsworks_app").each do |app|
         
         end
       
-      test = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem",
-      ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
+      ssl_cert = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
+      ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem"
       ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
 
     end
@@ -247,7 +247,7 @@ search("aws_opsworks_app").each do |app|
         :domains => domains,
         :app_name => app['shortname'],
         :enable_ssl => enable_ssl,
-        :test => "#{test[0]}",
+        :ssl_cert => ssl_cert,
         :ssl_key => ssl_key,
         :ssl_ca => ssl_ca,
         :multisite => app['environment']['MULTISITE'],
