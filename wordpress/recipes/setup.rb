@@ -92,7 +92,7 @@ if !Dir.exists?("#{healthcheck_root}")
     wget http://labs.frickle.com/files/ngx_cache_purge-2.3.tar.gz
     tar -xvzf ngx_cache_purge-2.3.tar.gz
     ln -s /etc/nginx-${NGINX_VERSION} /etc/nginx
-    cd nginx-${NGINX_VERSION}/
+    cd /etc/nginx
     ./configure --add-module=$HOME/ngx_pagespeed-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS} --add-module=$HOME/ngx_cache_purge-2.3
     make
     sudo make install
