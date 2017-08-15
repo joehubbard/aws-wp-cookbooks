@@ -69,7 +69,7 @@ if !Dir.exists?("#{healthcheck_root}")
   end
 
   apt_repository "nginx-pagespeed" do
-    uri "ppa:miteshshah/nginx-pagespeed"
+    uri "ppa:bhadauria-nitin/nginx-pagespeed"
   end
 
   directory "/var/ngx_pagespeed_cache" do
