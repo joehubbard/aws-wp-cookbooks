@@ -71,12 +71,25 @@ if !Dir.exists?("#{healthcheck_root}")
   bash "ps_module" do
     cwd "/home/ubuntu"
     code <<-EOH
-    mkdir tmp
-    cd tmp
-    git clone https://github.com/breeze2/ngx_pagespeed.so.git
-    cd tmp
-    sudo mkdir /etc/nginx/modules
-    sudo cp ngx_pagespeed.so/ubuntu_x86_64/nginx-xenial-1.10.3/ngx_pagespeed.so /etc/nginx/modules/
+    NPS_VERSION=1.12.34.2-stable
+    cd
+    wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}.zip
+    unzip v${NPS_VERSION}.zip
+    cd ngx_pagespeed-${NPS_VERSION}/
+    NPS_RELEASE_NUMBER=${NPS_VERSION/beta/}
+    NPS_RELEASE_NUMBER=${NPS_VERSION/stable/}
+    psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_RELEASE_NUMBER}.tar.gz
+    [ -e scripts/format_binary_url.sh ] && psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
+    wget ${psol_url}
+    tar -xzvf $(basename ${psol_url})  # extracts to psol/
+    NGINX_VERSION=1.12.1
+    cd
+    wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+    tar -xvzf nginx-${NGINX_VERSION}.tar.gz
+    cd nginx-${NGINX_VERSION}/
+    ./configure --add-dynamic-module=$HOME/ngx_pagespeed-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS} --with-compat
+    make
+    sudo make install
     EOH
   end
 
