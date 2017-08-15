@@ -3,6 +3,8 @@ worker_processes 4;
 pid /var/run/nginx.pid;
 worker_rlimit_nofile 8192;
 
+load_module modules/ngx_pagespeed.so;
+
 events {
   worker_connections 1024;
   multi_accept on;
