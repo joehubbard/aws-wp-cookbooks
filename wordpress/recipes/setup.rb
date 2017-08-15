@@ -71,6 +71,7 @@ if !Dir.exists?("#{healthcheck_root}")
   bash "ps_module" do
     cwd "/home/ubuntu"
     code <<-EOH
+    su ubuntu
     NPS_VERSION=1.12.34.2-stable
     cd
     wget https://github.com/pagespeed/ngx_pagespeed/archive/v${NPS_VERSION}.zip
