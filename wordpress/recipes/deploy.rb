@@ -3,7 +3,11 @@ user = 'ubuntu'
 search("aws_opsworks_app").each do |app|
 
   if app['deploy']
-    db_switch = app['environment']['staging'] == 1 ? 'staging' : 'wp'
+    if app['environment']['staging'] == 1
+      db_switch = 'staging'
+    else
+      db_switch = 'wp'
+    end
     db = node['deploy'][db_switch]['database']
     app_name = app['domains'].pop()
     domains = app['domains'].join(" ")
