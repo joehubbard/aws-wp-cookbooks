@@ -4,7 +4,7 @@ search("aws_opsworks_app").each do |app|
 
   if app['deploy']
     db_switch = app['environment']['staging'] == 1 ? 'staging' : 'wp'
-    db = node['deploy']['wp']['database']
+    db = node['deploy'][db_switch]['database']
     app_name = app['domains'].pop()
     domains = app['domains'].join(" ")
     domains_cert = app['environment']['CERTBOT_DOMAINS'] ||= nil ? app['environment']['CERTBOT_DOMAINS'] : app['domains'].join(" -d ")
