@@ -76,7 +76,7 @@ if !Dir.exists?("#{healthcheck_root}")
     git clone https://github.com/breeze2/ngx_pagespeed.so.git
     cd tmp
     sudo mkdir /etc/nginx/modules
-    cp ngx_pagespeed.so/ubuntu_x86_64/nginx-xenial-1.10.3/ngx_pagespeed.so /etc/nginx/modules/
+    sudo cp ngx_pagespeed.so/ubuntu_x86_64/nginx-xenial-1.10.3/ngx_pagespeed.so /etc/nginx/modules/
     EOH
   end
 
