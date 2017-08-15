@@ -3,8 +3,8 @@ user = 'ubuntu'
 search("aws_opsworks_app").each do |app|
 
   if app['deploy']
-
-    db = node['deploy']['wp']['database']
+    db_switch = app['environment']['staging'] ||= nil ? 'staging' : 'wp'
+    db = node['deploy'][db_switch]['database']
     app_name = app['domains'].pop()
     domains = app['domains'].join(" ")
     domains_cert = app['environment']['CERTBOT_DOMAINS'] ||= nil ? app['environment']['CERTBOT_DOMAINS'] : app['domains'].join(" -d ")
@@ -153,7 +153,7 @@ search("aws_opsworks_app").each do |app|
     execute "change-ownership" do
       command "chown -R www-data:www-data #{release_dir}"
     end
-    
+
     if app['environment']['HTTP_AUTH_USER']
       http_auth = true
       template "/etc/nginx/htpasswd" do
@@ -167,10 +167,10 @@ search("aws_opsworks_app").each do |app|
           :http_auth_pass => app['environment']['HTTP_AUTH_PASS']
          )
       end
-    end  
-    
+    end
+
     enable_ssl = true
-  
+
     if app['enable_ssl']
       Chef::Log.debug("enable_ssl is true, setup gui ssl certs")
       template "/etc/ssl/#{app['domains'].first}.crt" do
@@ -205,13 +205,13 @@ search("aws_opsworks_app").each do |app|
           app['enable_ssl']
         end
       end
-      
+
       test = "/etc/ssl/#{app['domains'].first}.crt",
       ssl_key = "/etc/ssl/#{app['domains'].first}.key",
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
 
     end
-    
+
     if app['environment']['CERTBOT']
         Chef::Log.debug("certbot is true, setup certbot")
         if Dir.exist?("/etc/letsencrypt/live/#{app['domains'].first}")
@@ -227,15 +227,15 @@ search("aws_opsworks_app").each do |app|
             group "root"
             mode "644"
           end
-        
+
         end
-      
-      test = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem",
-      ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
+
+      test = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
+      ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem"
       ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
 
     end
-    
+
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
       owner "root"
@@ -247,7 +247,7 @@ search("aws_opsworks_app").each do |app|
         :domains => domains,
         :app_name => app['shortname'],
         :enable_ssl => enable_ssl,
-        :test => "#{test[0]}",
+        :test => test,
         :ssl_key => ssl_key,
         :ssl_ca => ssl_ca,
         :multisite => app['environment']['MULTISITE'],
@@ -263,14 +263,14 @@ search("aws_opsworks_app").each do |app|
       command "nginx -t"
       action :nothing
     end
-    
+
     directory "/home/root" do
       owner "root"
       group "root"
       mode 755
       recursive true
     end
-    
+
     directory "/root/.aws" do
       owner "root"
       group "root"
