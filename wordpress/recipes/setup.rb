@@ -88,7 +88,7 @@ if !Dir.exists?("#{healthcheck_root}")
     wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
     tar -xvzf nginx-${NGINX_VERSION}.tar.gz
     cd nginx-${NGINX_VERSION}/
-    ./configure --add-dynamic-module=$HOME/ngx_pagespeed-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS} --with-compat
+    ./configure --add-dynamic-module=$HOME/ngx_pagespeed-${NPS_VERSION} ${PS_NGX_EXTRA_FLAGS}
     make
     sudo make install
     EOH
