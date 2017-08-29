@@ -102,8 +102,8 @@ search("aws_opsworks_app").each do |app|
         :ilab_media_imgix_enabled => "#{app['environment']['ILAB_MEDIA_IMGIX_ENABLED']}",
         :ilab_aws_s3_cdn_base => "#{app['environment']['ILAB_AWS_S3_CDN_BASE']}",
         :gmaps_api_key => "#{app['environment']['GMAPS_API_KEY']}",
-        :mailchimp_api_key => "#{app['enviroment']['MAILCHIMP_API_KEY']}",
-        :mailchimp_list_id => "#{app['enviroment']['MAILCHIMP_LIST_ID']}"
+        :mailchimp_api_key => "#{app['environment']['MAILCHIMP_API_KEY']}",
+        :mailchimp_list_id => "#{app['environment']['MAILCHIMP_LIST_ID']}"
       )
     end
 
