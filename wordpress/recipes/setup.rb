@@ -127,6 +127,10 @@ if !Dir.exists?("#{healthcheck_root}")
     command "ssh-keyscan github.com >> ~/.ssh/known_hosts"
   end
   
+  execute "ssh-keyscan-bitbucket" do
+    command "ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts"
+  end
+  
 #  execute "install-wp-cli" do
 #    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
 #  end
