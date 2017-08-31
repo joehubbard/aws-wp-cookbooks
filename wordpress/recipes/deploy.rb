@@ -3,7 +3,7 @@ user = 'ubuntu'
 search("aws_opsworks_app").each do |app|
 
   if app['deploy']
-    if app['environment']['staging'] == 1
+    if app['environment']['staging']
       db_switch = 'staging'
     else
       db_switch = 'wp'
