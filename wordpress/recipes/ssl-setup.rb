@@ -48,8 +48,8 @@ search("aws_opsworks_app").each do |app|
         end
       end
       
-      test = "/etc/ssl/#{app['domains'].first}.crt",
-      ssl_key = "/etc/ssl/#{app['domains'].first}.key",
+      ssl_cert = "/etc/ssl/#{app['domains'].first}.crt"
+      ssl_key = "/etc/ssl/#{app['domains'].first}.key"
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
 
     end
@@ -60,8 +60,8 @@ search("aws_opsworks_app").each do |app|
             command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
           end
 
-          test = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem",
-          ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem",
+          ssl_cert = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
+          ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem"
           ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
 
           template "/etc/cron.daily/certbot" do
@@ -86,7 +86,7 @@ search("aws_opsworks_app").each do |app|
         :enable_ssl => enable_ssl,
         :ssl_key => ssl_key,
         :ssl_ca => ssl_ca,
-        :test => "#{test[0]}",
+        :ssl_cert => ssl_cert,
         :multisite => app['environment']['MULTISITE'],
         :http_auth => http_auth
       )
