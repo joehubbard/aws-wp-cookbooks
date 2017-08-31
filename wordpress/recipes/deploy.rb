@@ -124,6 +124,11 @@ search("aws_opsworks_app").each do |app|
     execute "run-composer" do
       command "composer install -d #{release_dir}"
     end
+    
+    execute "delete-node-modules" do
+      cwd "#{current_link}"
+      command "rm -rf node_modules"
+    end
 
     execute "npm-install" do
       cwd "#{current_link}"
