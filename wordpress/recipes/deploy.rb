@@ -133,7 +133,7 @@ search("aws_opsworks_app").each do |app|
     execute "webpack-install" do
       cwd "#{release_dir}"
       command "npm run production"
-      only_if { File.exists?("#{current_link}webpack.mix.js") }
+      only_if { File.exists?("#{release_dir}webpack.mix.js") }
     end
 
     execute "bower-install" do
