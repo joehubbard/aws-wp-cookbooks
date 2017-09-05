@@ -116,27 +116,22 @@ search("aws_opsworks_app").each do |app|
       notifies :run, "execute[reload-nginx-php]"
     end
 
-    execute "reload-nginx-php" do
-      command "nginx -t && service nginx reload && service php7.0-fpm restart"
-      action :nothing
-    end
-
     execute "run-composer" do
       command "composer install -d #{release_dir}"
     end
     
     execute "delete-node-modules" do
-      cwd "#{current_link}"
+      cwd "#{release_link}"
       command "rm -rf node_modules"
     end
 
     execute "npm-install" do
-      cwd "#{current_link}"
+      cwd "#{release_link}"
       command "npm install"
     end
 
     execute "webpack-install" do
-      cwd "#{current_link}"
+      cwd "#{release_link}"
       command "npm run production"
       only_if { File.exists?("#{current_link}webpack.mix.js") }
     end
@@ -163,6 +158,11 @@ search("aws_opsworks_app").each do |app|
 
     execute "change-ownership" do
       command "chown -R www-data:www-data #{release_dir}"
+    end
+    
+    execute "reload-nginx-php" do
+      command "nginx -t && service nginx reload && service php7.0-fpm restart"
+      action :nothing
     end
     
     if app['environment']['HTTP_AUTH_USER']
