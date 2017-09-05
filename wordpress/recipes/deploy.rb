@@ -121,17 +121,17 @@ search("aws_opsworks_app").each do |app|
     end
     
     execute "delete-node-modules" do
-      cwd "#{release_link}"
+      cwd "#{release_dir}"
       command "rm -rf node_modules"
     end
 
     execute "npm-install" do
-      cwd "#{release_link}"
+      cwd "#{release_dir}"
       command "npm install"
     end
 
     execute "webpack-install" do
-      cwd "#{release_link}"
+      cwd "#{release_dir}"
       command "npm run production"
       only_if { File.exists?("#{current_link}webpack.mix.js") }
     end
