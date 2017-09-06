@@ -115,6 +115,18 @@ search("aws_opsworks_app").each do |app|
       to "#{release_dir}"
       notifies :run, "execute[reload-nginx-php]"
     end
+    
+    execute "change-directory-permissions" do
+      command "find #{release_dir} -type d -exec chmod 2775 {} +"
+    end
+
+    execute "change-file-permissions" do
+      command "find #{release_dir} -type f -exec chmod 0664 {} +"
+    end
+
+    execute "change-ownership" do
+      command "chown -R www-data:www-data #{release_dir}"
+    end
 
     execute "run-composer" do
       command "composer install -d #{release_dir}"
@@ -146,18 +158,6 @@ search("aws_opsworks_app").each do |app|
       cwd "#{site_root}current/web"
       command "gulp --production"
       only_if { File.exists?("#{theme_dir}gulpfile.js") }
-    end
-
-    execute "change-directory-permissions" do
-      command "find #{release_dir} -type d -exec chmod 2775 {} +"
-    end
-
-    execute "change-file-permissions" do
-      command "find #{release_dir} -type f -exec chmod 0664 {} +"
-    end
-
-    execute "change-ownership" do
-      command "chown -R www-data:www-data #{release_dir}"
     end
     
     execute "reload-nginx-php" do
