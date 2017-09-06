@@ -136,6 +136,11 @@ search("aws_opsworks_app").each do |app|
       cwd "#{release_dir}"
       command "rm -rf node_modules"
     end
+    
+    execute "delete-package-lock" do
+      cwd "#{release_dir}"
+      command "rm -rf package-lock.json"
+    end
 
     execute "npm-install" do
       cwd "#{release_dir}"
