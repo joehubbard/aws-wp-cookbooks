@@ -81,6 +81,10 @@ server {
     deny all;
   }
 
+  location /wp/readme.html {
+    deny all;
+  }
+
   location / {
     <% if @http_auth -%>
     auth_basic "";
