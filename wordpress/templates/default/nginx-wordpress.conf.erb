@@ -10,7 +10,7 @@ add_header X-XSS-Protection "1; mode=block";
 
 add_header Referrer-Policy "origin";
 
-add_header Content-Security-Policy "default-src 'self' 'unsafe-inline'  https:; font-src https: data:";
+add_header Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; font-src https: data:; img-src data: 'self' https:";
 
 server {
   listen 80;
