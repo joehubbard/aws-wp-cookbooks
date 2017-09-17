@@ -55,7 +55,7 @@ search("aws_opsworks_app").each do |app|
     end
 
     execute "ssh-scan" do
-      command "touch /home/#{user}/.ssh/known_hosts; ssh-keygen -f /home/#{user}/.ssh/known_hosts -R gitlab.com; ssh-keyscan -t rsa gitlab.com >> /home/#{user}/.ssh/known_hosts; ssh-keygen -f /home/#{user}/.ssh/known_hosts -R bitbucket.org; ssh-keyscan -t rsa bitbucket.org >> /home/#{user}/.ssh/known_hosts ssh-keyscan -t rsa github.com >> /home/#{user}/.ssh/known_hosts"
+      command "touch /home/#{user}/.ssh/known_hosts; ssh-keygen -f /home/#{user}/.ssh/known_hosts -R gitlab.com; ssh-keyscan -t rsa gitlab.com >> /home/#{user}/.ssh/known_hosts; ssh-keygen -f /home/#{user}/.ssh/known_hosts -R bitbucket.org; ssh-keyscan -t rsa bitbucket.org >> /home/#{user}/.ssh/known_hosts; ssh-keygen -f /home/#{user}/.ssh/known_hosts -R github.com; ssh-keyscan -t rsa github.com >> /home/#{user}/.ssh/known_hosts;"
     end
 
     execute "ssh-git-clone" do
