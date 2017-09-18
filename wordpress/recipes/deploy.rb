@@ -52,6 +52,7 @@ search("aws_opsworks_app").each do |app|
       group "opsworks"
       mode 00400
       action [:delete, :create]
+      not_if { File.exists?("/home/#{user}/.ssh/id_rsa") }
     end
 
     execute "ssh-scan" do
