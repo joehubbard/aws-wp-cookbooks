@@ -235,7 +235,7 @@ search("aws_opsworks_app").each do |app|
           Chef::Log.debug("letsencrypt folder exists")
         else
           execute "certbot" do
-            command "certbot certonly --webroot -w #{current_link}web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
+            command "certbot certonly --webroot -w #{current_link}/web -d #{domains_cert} --agree-tos --email james.hall@impression.co.uk --non-interactive"
           end
 
           template "/etc/cron.daily/certbot" do
