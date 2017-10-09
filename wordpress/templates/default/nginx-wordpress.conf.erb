@@ -1,17 +1,5 @@
 fastcgi_cache_path <%= @web_root %>/cache levels=1:2 keys_zone=<%= @app_name %>:100m inactive=60m;
 
-add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
-
-add_header X-Frame-Options SAMEORIGIN;
-
-add_header X-Content-Type-Options nosniff;
-
-add_header X-XSS-Protection "1; mode=block";
-
-add_header Referrer-Policy "origin";
-
-add_header Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; font-src https: data:; img-src data: 'self' https:";
-
 server {
   listen 80;
   listen [::]:80;
