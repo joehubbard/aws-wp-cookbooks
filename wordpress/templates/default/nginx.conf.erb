@@ -42,6 +42,14 @@ http {
   add_header Fastcgi-Cache $upstream_cache_status;
   fastcgi_cache_key "$scheme$request_method$host$request_uri";
 
+  add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
+  #add_header X-Frame-Options SAMEORIGIN;
+  add_header X-Content-Type-Options nosniff;
+  add_header X-XSS-Protection "1; mode=block";
+  add_header Referrer-Policy "origin";
+  add_header Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' https:; font-src https: data:; img-src data: 'self' https:";
+
+
   include /etc/nginx/conf.d/*.conf;
   include /etc/nginx/sites-enabled/*;
 }
