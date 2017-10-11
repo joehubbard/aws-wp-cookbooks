@@ -68,9 +68,9 @@ search("aws_opsworks_app").each do |app|
       action :delete
     end
 
-    link "#{release_dir}web/app/uploads" do
-      to "#{shared_dir}web/app/uploads"
-    end
+    #link "#{release_dir}web/app/uploads" do
+    #  to "#{shared_dir}web/app/uploads"
+    #end
 
     template "#{release_dir}.env" do
       source "env.erb"
