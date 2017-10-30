@@ -7,7 +7,7 @@ server {
   <% if @ssl_cert %>
 
   if ($scheme != "https") {
-    rewrite ^ https://$host$uri permanent;
+    rewrite ^ https://carsnip.comt$uri permanent;
   }
 
   rewrite ^([^.]*[^/])$ https://carsnip.com$1/ permanent;
