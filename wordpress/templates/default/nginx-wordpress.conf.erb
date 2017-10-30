@@ -50,7 +50,7 @@ server {
   send_timeout                    25s;
 
   if (!-f $request_filename) {
-    rewrite [^/]$ $uri/ permanent;
+    rewrite [^/]$ https://carsnip.com$uri/ permanent;
   }
 
   location = /favicon.ico {
