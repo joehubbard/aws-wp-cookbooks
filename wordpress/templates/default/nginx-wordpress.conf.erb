@@ -10,6 +10,8 @@ server {
     rewrite ^ https://$host$uri permanent;
   }
 
+  rewrite ^([^.]*[^/])$ https://carsnip.com$1/ permanent;
+
   listen 443 ssl http2;
   listen [::]:443 ssl http2;
   ssl_protocols TLSv1.2 TLSv1.1 TLSv1; #Turns off TLSv3 to protect against POODLE Attack
@@ -50,7 +52,7 @@ server {
   send_timeout                    25s;
 
   if (!-f $request_filename) {
-    rewrite [^/]$ https://carsnip.com$uri/ permanent;
+    rewrite [^/]$ $uri/ permanent;
   }
 
   location = /favicon.ico {
