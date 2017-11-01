@@ -134,9 +134,8 @@ search("aws_opsworks_app").each do |app|
     end
 
     execute "npm-install" do
-      user "www-data"
-      cwd "#{release_dir}"
-      command "npm install"
+      command "su www-data -l -c 'cd #{release_dir} && npm install'"
+      action :run
     end
 
     execute "webpack-install" do
