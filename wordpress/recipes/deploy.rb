@@ -134,7 +134,7 @@ search("aws_opsworks_app").each do |app|
     end
 
     execute "npm-install" do
-      command "su www-data -l -c 'cd #{release_dir} && npm install'"
+      command "su ubuntu -l -c 'cd #{release_dir} && npm install'"
       action :run
     end
 
