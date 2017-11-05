@@ -130,6 +130,7 @@ search("aws_opsworks_app").each do |app|
     end
 
     execute "run-composer" do
+      user "ubuntu"
       command "composer install -d #{release_dir}"
     end
 
