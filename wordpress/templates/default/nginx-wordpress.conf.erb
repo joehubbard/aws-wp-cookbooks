@@ -48,10 +48,10 @@ server {
   client_header_timeout           15s;
   keepalive_timeout               75s;
   send_timeout                    25s;
-
-  if (!-f $request_filename) {
-    rewrite [^/]$ $uri/ permanent;
-  }
+  # Not needed?
+  #if (!-f $request_filename) {
+  #  rewrite [^/]$ $uri/ permanent;
+  #}
 
   location = /favicon.ico {
     log_not_found off;
