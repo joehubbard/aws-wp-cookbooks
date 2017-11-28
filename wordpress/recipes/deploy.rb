@@ -84,6 +84,7 @@ search("aws_opsworks_app").each do |app|
         :db_host          =>  "#{db['host']}",
         :db_user          =>  "#{db['username']}",
         :db_password      =>  "#{db['password']}",
+        :db_prefix        =>  "#{app['environment']['DB_PREFIX']}",
         :wp_env           =>  "#{app['environment']['WP_ENV']}",
         :wp_home          =>  "#{wp_home}",
         :wp_siteurl       =>  "#{site_url}",
