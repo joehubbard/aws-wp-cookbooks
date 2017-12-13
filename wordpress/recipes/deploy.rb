@@ -268,7 +268,7 @@ search("aws_opsworks_app").each do |app|
     end
     
     link "#{site_root}current/custom-nginx.conf" do
-      to "/etc/nginx/custom-nginx.conf"
+      to "/etc/nginx/conf.d/custom-nginx.conf"
     end
 
     execute "check-nginx" do
