@@ -48,7 +48,7 @@ http {
   add_header X-Content-Type-Options nosniff;
   add_header X-XSS-Protection "1; mode=block";
   add_header Referrer-Policy "origin";
-  add_header Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:; font-src https: data:; img-src data: 'self' https:";
+  add_header Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:; font-src http: https: data:; img-src data: 'self' https:";
 
 
   include /etc/nginx/conf.d/*.conf;
