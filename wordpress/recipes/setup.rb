@@ -130,15 +130,15 @@ if !Dir.exists?("#{healthcheck_root}")
   execute "ssh-keyscan-bitbucket" do
     command "ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts"
   end
-  
-  execute "download-wp-cli" do
-    command "curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
-    cwd "/var/tmp"
-  end
 
-  execute "install-wp-cli" do
-    command "chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
-    cwd "/var/tmp"
+  bash 'install_wpcli' do
+    user 'root'
+    cwd '/tmp'
+    code <<-EOH
+    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    chmod +x wp-cli.phar
+    sudo mv wp-cli.phar /usr/local/bin/wp
+    EOH
   end
 
   execute "install-composer" do
