@@ -133,10 +133,12 @@ if !Dir.exists?("#{healthcheck_root}")
   
   execute "download-wp-cli" do
     command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+    cwd "/var/tmp"
   end
 
   execute "install-wp-cli" do
     command "chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
+    cwd "/var/tmp"
   end
 
   execute "install-composer" do
