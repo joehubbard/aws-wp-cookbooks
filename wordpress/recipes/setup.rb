@@ -131,12 +131,20 @@ if !Dir.exists?("#{healthcheck_root}")
     command "ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts"
   end
   
+  execute "download-wp-cli" do
+    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+  end
+
   execute "install-wp-cli" do
-    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
+    command "chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
   end
 
   execute "install-composer" do
     command "curl -sS https://getcomposer.org/installer | php"
+  end
+
+  execute "install-composer-globally" do
+    command "mv composer.phar /usr/local/bin/composer"
   end
 
   execute "download-amplify" do
@@ -145,10 +153,6 @@ if !Dir.exists?("#{healthcheck_root}")
 
   execute "install-amplify" do
     command "API_KEY='35941d27b405b44ff8ce6a051784cf2f' sh ./install.sh"
-  end
-
-  execute "install-composer-globally" do
-    command "mv composer.phar /usr/local/bin/composer"
   end
   
   execute "npm-webpack" do
