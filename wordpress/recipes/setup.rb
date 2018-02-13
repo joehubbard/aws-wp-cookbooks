@@ -132,7 +132,7 @@ if !Dir.exists?("#{healthcheck_root}")
   end
   
   execute "download-wp-cli" do
-    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+    command "curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
     cwd "/var/tmp"
   end
 
