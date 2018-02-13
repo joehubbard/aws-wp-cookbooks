@@ -190,6 +190,14 @@ if !Dir.exists?("#{healthcheck_root}")
     notifies :run, "execute[restart-nginx]"
   end
 
+  template "/etc/nginx/conf.d/stub_status.conf" do
+      source "stub_status.conf.erb"
+      owner "root"
+      group "www-data"
+      mode "640"
+      notifies :run, "execute[restart-nginx]"
+  end
+
   file "/etc/nginx/sites-enabled/default" do
     action :delete
     manage_symlink_source true
