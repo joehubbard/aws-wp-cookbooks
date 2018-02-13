@@ -38,7 +38,7 @@ server {
 
   server_name <%= @domains %>;
 
-  access_log syslog:server=127.0.0.1:12000,tag=amplify,severity=info main_ext;
+  access_log  /var/log/nginx/<%= @app_name %>.access.log main_ext;
   error_log   /var/log/nginx/<%= @app_name %>.error.log warn;
 
   index index.php index.htm index.html;

@@ -156,6 +156,10 @@ if !Dir.exists?("#{healthcheck_root}")
   execute "install-amplify" do
     command "API_KEY='35941d27b405b44ff8ce6a051784cf2f' sh ./install.sh"
   end
+
+  execute "install-iterm2-integration" do
+    command "curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash"
+  end
   
   execute "npm-webpack" do
     command "npm install -g webpack"
