@@ -208,6 +208,14 @@ if !Dir.exists?("#{healthcheck_root}")
       notifies :run, "execute[restart-nginx]"
   end
 
+  template "/etc/php/7.0/fpm/pool.d/www.conf" do
+        source "www.conf.erb"
+        owner "root"
+        group "root"
+        mode "644"
+        notifies :run, "execute[restart-php]"
+  end
+
   file "/etc/nginx/sites-enabled/default" do
     action :delete
     manage_symlink_source true
@@ -232,6 +240,11 @@ if !Dir.exists?("#{healthcheck_root}")
   execute "restart-nginx" do
     command "nginx -t && service nginx restart"
     action :nothing
+  end
+
+  execute "restart-php" do
+      command "service php7.0-fpm restart"
+      action :nothing
   end
 
 end
