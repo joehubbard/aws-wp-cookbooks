@@ -269,6 +269,7 @@ search("aws_opsworks_app").each do |app|
     
     link "/etc/nginx/conf.d/custom-nginx.conf" do
       to "#{site_root}current/custom-nginx.conf"
+      only_if { app['environment']['WP_ENV'] == "production" }
     end
 
     execute "check-nginx" do
