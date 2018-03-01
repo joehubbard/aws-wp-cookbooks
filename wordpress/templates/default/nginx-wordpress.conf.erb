@@ -141,6 +141,7 @@ server {
     if (!-f $document_root$fastcgi_script_name) {
       return 404;
     }
+    fastcgi_cache_key $scheme$host$request_uri$request_method;
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     fastcgi_pass unix:/run/php/php7.0-fpm.sock;
     fastcgi_read_timeout 150;
