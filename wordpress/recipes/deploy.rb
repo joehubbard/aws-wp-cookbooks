@@ -311,10 +311,10 @@ search("aws_opsworks_app").each do |app|
       group "www-data"
       mode "0644"
       variables(
-        :log_bucket_name => app['enviroment']['LOG_BUCKET_NAME']
+        :log_bucket_name => app['environment']['LOG_BUCKET_NAME']
       )
       only_if do
-        app['enviroment']['LOG_BUCKET_NAME']
+        app['environment']['LOG_BUCKET_NAME']
       end
       action [:delete, :create]
     end
