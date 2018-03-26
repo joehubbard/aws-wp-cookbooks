@@ -313,6 +313,9 @@ search("aws_opsworks_app").each do |app|
       variables(
         :log_bucket_name => app['enviroment']['LOG_BUCKET_NAME']
       )
+      only_if do
+        app['enviroment']['LOG_BUCKET_NAME']
+      end
       action [:delete, :create]
     end
 
