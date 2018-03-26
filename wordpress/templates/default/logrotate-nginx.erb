@@ -10,6 +10,6 @@
   sharedscripts
   postrotate
   /etc/init.d/nginx reopen_logs
-  aws s3 sync --acl bucket-owner-full-control --profile=wordpress_logs --exclude '' --include '*.gz' /var/log/nginx/. s3://carsnip-live-logs/wordpress/
+  aws s3 sync --acl bucket-owner-full-control --profile=wordpress_logs --exclude '' --include '*.gz' /var/log/nginx/. s3://<%= @error_log_name %>/wordpress/
   endscript
 }
