@@ -310,6 +310,9 @@ search("aws_opsworks_app").each do |app|
       owner "root"
       group "www-data"
       mode "0644"
+      variables(
+        :log_bucket_name => app['enviroment']['LOG_BUCKET_NAME']
+      )
       action [:delete, :create]
     end
 
