@@ -123,7 +123,7 @@ server {
   }   
 
   # Don’t use the cache for logged in users or recent commenters
-  if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|wordpress_logged_in") {
+  if ($http_cookie ~* "comment_author|wordpress_[a-f0-9]+|wp-postpass|wordpress_no_cache|wordpress_logged_in|woocommerce_items_in_cart") {
       set $skip_cache 1;
   }
 
@@ -169,6 +169,14 @@ server {
   rewrite /wp-admin$ $scheme://$host$uri/ last;
   rewrite ^/(wp-.*.php)$ /wp/$1 last;
   rewrite ^/(wp-(content|admin|includes).*) /wp/$1 last;
+  <% end -%>
+
+  <% if @multisite == 'subdirectory' -%>
+  if (!-e $request_filename) {
+     rewrite /wp-admin$ $scheme://$host$uri/ permanent;
+     rewrite ^/[_0-9a-zA-Z-]+(/wp-.*) /wp$1 last;
+     rewrite ^/[_0-9a-zA-Z-]+(/.*\.php)$ /wp$1 last;
+  }
   <% end -%>
 
 }

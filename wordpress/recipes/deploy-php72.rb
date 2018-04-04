@@ -3,7 +3,11 @@ user = 'ubuntu'
 search("aws_opsworks_app").each do |app|
 
   if app['deploy']
-    db_switch = app['shortname']
+    if app['environment']['staging']
+      db_switch = 'staging'
+    else
+      db_switch = 'wp'
+    end
     db = node['deploy'][db_switch]['database']
     app_name = app['domains'].pop()
     domains = app['domains'].join(" ")
@@ -113,7 +117,7 @@ search("aws_opsworks_app").each do |app|
       to "#{release_dir}"
       notifies :run, "execute[reload-nginx-php]"
     end
-    
+
     execute "change-directory-permissions" do
       command "find #{release_dir} -type d -exec chmod 2775 {} +"
     end
@@ -152,12 +156,12 @@ search("aws_opsworks_app").each do |app|
       command "gulp --production"
       only_if { File.exists?("#{theme_dir}gulpfile.js") }
     end
-    
+
     execute "reload-nginx-php" do
-      command "sudo nginx -t && sudo service nginx reload && sudo service php7.0-fpm restart"
+      command "sudo nginx -t && sudo service nginx reload && sudo service php7.2-fpm restart"
       action :nothing
     end
-    
+
     if app['environment']['HTTP_AUTH_USER']
       http_auth = true
       template "/etc/nginx/htpasswd" do
@@ -171,10 +175,10 @@ search("aws_opsworks_app").each do |app|
           :http_auth_pass => app['environment']['HTTP_AUTH_PASS']
          )
       end
-    end  
-    
+    end
+
     enable_ssl = true
-  
+
     if app['enable_ssl']
       Chef::Log.debug("enable_ssl is true, setup gui ssl certs")
       template "/etc/ssl/#{app['domains'].first}.crt" do
@@ -209,13 +213,13 @@ search("aws_opsworks_app").each do |app|
           app['enable_ssl']
         end
       end
-      
+
       ssl_cert = "/etc/ssl/#{app['domains'].first}.crt"
       ssl_key = "/etc/ssl/#{app['domains'].first}.key"
       ssl_ca = "/etc/ssl/#{app['domains'].first}.ca"
 
     end
-    
+
     if app['environment']['CERTBOT']
         Chef::Log.debug("certbot is true, setup certbot")
         if Dir.exist?("/etc/letsencrypt/live/#{app['domains'].first}")
@@ -231,15 +235,15 @@ search("aws_opsworks_app").each do |app|
             group "root"
             mode "644"
           end
-        
+
         end
-      
+
       ssl_cert = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
       ssl_key = "/etc/letsencrypt/live/#{app['domains'].first}/privkey.pem"
       ssl_ca = "/etc/letsencrypt/live/#{app['domains'].first}/fullchain.pem"
 
     end
-    
+
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
       owner "root"
@@ -262,7 +266,7 @@ search("aws_opsworks_app").each do |app|
     link "/etc/nginx/sites-enabled/nginx-#{app['shortname']}.conf" do
       to "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf"
     end
-    
+
     link "/etc/nginx/conf.d/custom-nginx.conf" do
       to "#{site_root}current/custom-nginx.conf"
       only_if { app['environment']['WP_ENV'] == "production" }
@@ -272,14 +276,14 @@ search("aws_opsworks_app").each do |app|
       command "nginx -t"
       action :nothing
     end
-    
+
     directory "/home/root" do
       owner "root"
       group "root"
       mode 755
       recursive true
     end
-    
+
     directory "/root/.aws" do
       owner "root"
       group "root"
@@ -306,12 +310,6 @@ search("aws_opsworks_app").each do |app|
       owner "root"
       group "www-data"
       mode "0644"
-      variables(
-        :log_bucket_name => app['environment']['LOG_BUCKET_NAME']
-      )
-      only_if do
-        app['environment']['LOG_BUCKET_NAME']
-      end
       action [:delete, :create]
     end
 
