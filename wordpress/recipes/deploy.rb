@@ -78,6 +78,7 @@ search("aws_opsworks_app").each do |app|
       variables(
         :db_name          =>  "#{db['database']}",
         :db_host          =>  "#{db['host']}",
+        :db_read_host     =>  "#{app['environment']['DB_READ_HOST']}",
         :db_user          =>  "#{db['username']}",
         :db_password      =>  "#{db['password']}",
         :db_prefix        =>  "#{app['environment']['DB_PREFIX']}",
