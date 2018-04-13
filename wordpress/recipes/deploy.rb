@@ -241,6 +241,12 @@ search("aws_opsworks_app").each do |app|
 
     end
     
+    if File.file?("#{current_link}/allow_ips.conf")
+      allow_ips = true
+    else
+      allow_ips = false
+    end
+    
     template "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf" do
       source "nginx-wordpress.conf.erb"
       owner "root"
@@ -256,7 +262,8 @@ search("aws_opsworks_app").each do |app|
         :ssl_key => ssl_key,
         :ssl_ca => ssl_ca,
         :multisite => app['environment']['MULTISITE'],
-        :http_auth => http_auth
+        :http_auth => http_auth,
+        :allow_ips => allow_ips
       )
     end
 
