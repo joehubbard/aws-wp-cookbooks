@@ -42,6 +42,12 @@ server {
 
   index index.php index.htm index.html;
 
+  <% if @allow_ips -%>
+  # White list ips
+  include <%= @web_root %>/../allow_ips.conf
+  deny all;
+  <% end -%>
+
   client_max_body_size 100M;
 
   client_body_timeout             15s;
