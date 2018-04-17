@@ -263,7 +263,8 @@ search("aws_opsworks_app").each do |app|
         :ssl_ca => ssl_ca,
         :multisite => app['environment']['MULTISITE'],
         :http_auth => http_auth,
-        :allow_ips => allow_ips
+        :allow_ips => allow_ips,
+        :no_https_redirect => app['environment']['NO_HTTPS_REDIRECT']
       )
     end
 
