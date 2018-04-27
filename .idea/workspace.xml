@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05c8573d-b915-47fd-99d3-9c7e142d6582" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordpress/recipes/deploy.rb" afterPath="$PROJECT_DIR$/wordpress/recipes/deploy.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordpress/recipes/setup.rb" afterPath="$PROJECT_DIR$/wordpress/recipes/setup.rb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,7 +13,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="deploy.rb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="deploy.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wordpress/recipes/deploy.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="312">
@@ -23,11 +23,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.rb" pinned="false" current-in-tab="false">
+      <file leaf-file-name="setup.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wordpress/recipes/setup.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state relative-caret-position="366">
+              <caret line="245" column="4" lean-forward="false" selection-start-line="245" selection-start-column="4" selection-end-line="245" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -135,10 +135,10 @@
         <option value="$PROJECT_DIR$/wordpress/templates/default/log_variables.conf.erb" />
         <option value="$PROJECT_DIR$/wordpress/templates/default/env.erb" />
         <option value="$PROJECT_DIR$/wordpress/templates/default/www.conf.erb" />
-        <option value="$PROJECT_DIR$/wordpress/recipes/setup.rb" />
         <option value="$PROJECT_DIR$/wordpress/templates/default/hourly-cron.erb" />
         <option value="$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb" />
         <option value="$PROJECT_DIR$/wordpress/recipes/deploy.rb" />
+        <option value="$PROJECT_DIR$/wordpress/recipes/setup.rb" />
       </list>
     </option>
   </component>
@@ -247,12 +247,12 @@
       <updated>1518527965763</updated>
       <workItem from="1518527967674" duration="9745000" />
       <workItem from="1523983963797" duration="712000" />
-      <workItem from="1524817218308" duration="8056000" />
+      <workItem from="1524817218308" duration="8497000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18513000" />
+    <option name="totallyTimeSpent" value="18954000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1280" height="778" extended-state="6" />
@@ -481,14 +481,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wordpress/recipes/setup.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="58">
@@ -501,6 +493,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
           <caret line="182" column="36" lean-forward="true" selection-start-line="182" selection-start-column="36" selection-end-line="182" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wordpress/recipes/setup.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="245" column="4" lean-forward="false" selection-start-line="245" selection-start-column="4" selection-end-line="245" selection-end-column="4" />
           <folding />
         </state>
       </provider>

@@ -241,6 +241,11 @@ if !Dir.exists?("#{healthcheck_root}")
     to "/etc/nginx/sites-available/nginx-healthcheck.conf"
   end
 
+  execute "restart-php" do
+    command "service php7.0-fpm restart"
+    action :nothing
+  end
+
   execute "restart-nginx" do
     command "nginx -t && service nginx restart"
     action :nothing
