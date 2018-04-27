@@ -172,7 +172,20 @@ search("aws_opsworks_app").each do |app|
           :http_auth_pass => app['environment']['HTTP_AUTH_PASS']
          )
       end
-    end  
+    end
+
+    template "/etc/cron.hourly/wpcron" do
+        source "hourly-cron.erb"
+        owner "root"
+        group "root"
+        mode "644"
+        variables(
+            :wp_home => "#{wp_home}",
+        }
+        only_if do
+            File.file?("/etc/cron.hourly/wpcron")
+        end
+    end
     
     enable_ssl = true
   

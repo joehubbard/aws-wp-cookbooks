@@ -131,9 +131,15 @@ if !Dir.exists?("#{healthcheck_root}")
     command "ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts"
   end
   
-#  execute "install-wp-cli" do
-#    command "curl -sS https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp"
-#  end
+  bash 'install_wpcli' do
+      user 'root'
+      cwd '/tmp'
+      code <<-EOH
+      curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+      chmod +x wp-cli.phar
+      sudo mv wp-cli.phar /usr/local/bin/wp
+      EOH
+  end
 
   execute "install-composer" do
     command "curl -sS https://getcomposer.org/installer | php"
@@ -141,6 +147,14 @@ if !Dir.exists?("#{healthcheck_root}")
 
   execute "install-composer-globally" do
     command "mv composer.phar /usr/local/bin/composer"
+  end
+
+  execute "download-amplify" do
+      command "curl -L -O https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh"
+  end
+
+  execute "install-amplify" do
+     command "API_KEY='35941d27b405b44ff8ce6a051784cf2f' sh ./install.sh"
   end
   
   execute "npm-webpack" do
@@ -180,6 +194,30 @@ if !Dir.exists?("#{healthcheck_root}")
     group "www-data"
     mode "640"
     notifies :run, "execute[restart-nginx]"
+  end
+
+  template "/etc/nginx/conf.d/stub_status.conf" do
+    source "stub_status.conf.erb"
+    owner "root"
+    group "www-data"
+    mode "640"
+    notifies :run, "execute[restart-nginx]"
+  end
+
+  template "/etc/nginx/conf.d/log_variables.conf" do
+    source "log_variables.conf.erb"
+    owner "root"
+    group "www-data"
+    mode "640"
+    notifies :run, "execute[restart-nginx]"
+  end
+
+  template "/etc/php/7.0/fpm/pool.d/www.conf" do
+    source "www.conf.erb"
+    owner "root"
+    group "root"
+    mode "644"
+    notifies :run, "execute[restart-php]"
   end
 
   file "/etc/nginx/sites-enabled/default" do
