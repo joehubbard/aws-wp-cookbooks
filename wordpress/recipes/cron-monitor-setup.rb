@@ -13,6 +13,7 @@ search("aws_opsworks_app").each do |app|
     shared_dir = "/efs/#{app['shortname']}/shared/"
     current_link = "#{site_root}current/"
     wp_home =  app['environment']['WP_HOME']
+    site_url = "#{wp_home}/wp"
   
     template "/etc/cron.hourly/wpcron" do
             source "hourly-cron.erb"
@@ -20,7 +21,7 @@ search("aws_opsworks_app").each do |app|
             group "root"
             mode "644"
             variables(
-                :wp_home => "#{wp_home}"
+                :wp_home => "#{site_url}"
             )
             only_if do
                 !File.file?("/etc/cron.hourly/wpcron")

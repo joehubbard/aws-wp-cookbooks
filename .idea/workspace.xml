@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05c8573d-b915-47fd-99d3-9c7e142d6582" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordpress/templates/default/hourly-cron.erb" afterPath="$PROJECT_DIR$/wordpress/templates/default/hourly-cron.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb" afterPath="$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,8 +16,8 @@
       <file leaf-file-name="deploy.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wordpress/recipes/deploy.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="157" column="92" lean-forward="false" selection-start-line="157" selection-start-column="85" selection-end-line="157" selection-end-column="92" />
+            <state relative-caret-position="210">
+              <caret line="14" column="6" lean-forward="true" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -27,8 +26,8 @@
       <file leaf-file-name="setup.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wordpress/recipes/setup.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="219" column="39" lean-forward="false" selection-start-line="219" selection-start-column="28" selection-end-line="219" selection-end-column="39" />
+            <state relative-caret-position="240">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -44,11 +43,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cron-monitor-setup.rb" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cron-monitor-setup.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="45" column="54" lean-forward="true" selection-start-line="45" selection-start-column="54" selection-end-line="45" selection-end-column="54" />
+            <state relative-caret-position="345">
+              <caret line="23" column="39" lean-forward="false" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -74,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hourly-cron.erb" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hourly-cron.erb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wordpress/templates/default/hourly-cron.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            <state relative-caret-position="45">
+              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -138,8 +137,8 @@
         <option value="$PROJECT_DIR$/wordpress/templates/default/env.erb" />
         <option value="$PROJECT_DIR$/wordpress/templates/default/www.conf.erb" />
         <option value="$PROJECT_DIR$/wordpress/recipes/setup.rb" />
-        <option value="$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb" />
         <option value="$PROJECT_DIR$/wordpress/templates/default/hourly-cron.erb" />
+        <option value="$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb" />
       </list>
     </option>
   </component>
@@ -249,12 +248,12 @@
       <updated>1518527965763</updated>
       <workItem from="1518527967674" duration="9745000" />
       <workItem from="1523983963797" duration="712000" />
-      <workItem from="1524817218308" duration="5440000" />
+      <workItem from="1524817218308" duration="5681000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15897000" />
+    <option name="totallyTimeSpent" value="16138000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="-258" width="1920" height="1058" extended-state="6" />
@@ -451,14 +450,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wordpress/recipes/setup.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="219" column="39" lean-forward="false" selection-start-line="219" selection-start-column="28" selection-end-line="219" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wordpress/templates/default/env.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
@@ -475,18 +466,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb">
+    <entry file="file://$PROJECT_DIR$/wordpress/templates/default/hourly-cron.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="45" column="54" lean-forward="true" selection-start-line="45" selection-start-column="54" selection-end-line="45" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wordpress/recipes/deploy.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="157" column="92" lean-forward="false" selection-start-line="157" selection-start-column="85" selection-end-line="157" selection-end-column="92" />
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -499,10 +482,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wordpress/templates/default/hourly-cron.erb">
+    <entry file="file://$PROJECT_DIR$/wordpress/recipes/setup.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        <state relative-caret-position="240">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wordpress/recipes/deploy.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="6" lean-forward="true" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="39" lean-forward="false" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
           <folding />
         </state>
       </provider>
