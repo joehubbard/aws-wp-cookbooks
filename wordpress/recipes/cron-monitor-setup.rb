@@ -40,7 +40,7 @@ search("aws_opsworks_app").each do |app|
           owner "root"
           group "www-data"
           mode "640"
-          notifies :run, "execute[restart-nginx]"
+          notifies :run, "execute[reload-nginx-php]"
     end
 
     template "/etc/nginx/conf.d/log_variables.conf" do
@@ -48,7 +48,7 @@ search("aws_opsworks_app").each do |app|
               owner "root"
               group "www-data"
               mode "640"
-              notifies :run, "execute[restart-nginx]"
+              notifies :run, "execute[reload-nginx-php]"
      end
 
     template "/etc/php/7.0/fpm/pool.d/www.conf" do
@@ -56,7 +56,7 @@ search("aws_opsworks_app").each do |app|
             owner "root"
             group "root"
             mode "644"
-            notifies :run, "execute[restart-php]"
+            notifies :run, "execute[reload-nginx-php]"
     end
 
     execute "reload-nginx-php" do
