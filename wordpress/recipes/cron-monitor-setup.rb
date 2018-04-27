@@ -23,7 +23,7 @@ search("aws_opsworks_app").each do |app|
                 :wp_home => "#{wp_home}"
             )
             only_if do
-                File.file?("/etc/cron.hourly/wpcron")
+                !File.file?("/etc/cron.hourly/wpcron")
             end
     end
 

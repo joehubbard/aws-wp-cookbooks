@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05c8573d-b915-47fd-99d3-9c7e142d6582" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb" afterPath="$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,8 +47,8 @@
       <file leaf-file-name="cron-monitor-setup.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+            <state relative-caret-position="375">
+              <caret line="25" column="17" lean-forward="false" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -245,12 +246,12 @@
       <updated>1518527965763</updated>
       <workItem from="1518527967674" duration="9745000" />
       <workItem from="1523983963797" duration="712000" />
-      <workItem from="1524817218308" duration="4910000" />
+      <workItem from="1524817218308" duration="4997000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15367000" />
+    <option name="totallyTimeSpent" value="15454000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="-258" width="1920" height="1058" extended-state="6" />
@@ -497,8 +498,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wordpress/recipes/cron-monitor-setup.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        <state relative-caret-position="375">
+          <caret line="25" column="17" lean-forward="false" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
           <folding />
         </state>
       </provider>
