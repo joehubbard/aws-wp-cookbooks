@@ -290,6 +290,14 @@ search("aws_opsworks_app").each do |app|
       only_if { app['environment']['WP_ENV'] == "production" }
     end
 
+    template "/etc/nginx/conf.d/log_variables.conf" do
+        source "log_variables.conf.erb"
+        owner "root"
+        group "www-data"
+        mode "640"
+        notifies :run, "execute[restart-nginx]"
+    end
+
     execute "check-nginx" do
       command "nginx -t"
       action :nothing

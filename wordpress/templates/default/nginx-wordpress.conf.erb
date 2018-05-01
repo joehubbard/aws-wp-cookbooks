@@ -41,7 +41,9 @@ server {
 
   server_name <%= @domains %>;
 
-  error_log   /var/log/nginx/<%= @app_name %>.error.log;
+  access_log /var/log/nginx/<%= @app_name %>.access.log main_ext;
+
+  error_log   /var/log/nginx/<%= @app_name %>.error.log warn;
 
   index index.php index.htm index.html;
 
