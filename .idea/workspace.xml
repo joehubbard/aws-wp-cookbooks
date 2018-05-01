@@ -4,7 +4,6 @@
     <list default="true" id="05c8573d-b915-47fd-99d3-9c7e142d6582" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordpress/recipes/deploy.rb" afterPath="$PROJECT_DIR$/wordpress/recipes/deploy.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wordpress/templates/default/nginx-wordpress.conf.erb" afterPath="$PROJECT_DIR$/wordpress/templates/default/nginx-wordpress.conf.erb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,8 +17,8 @@
       <file leaf-file-name="deploy.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wordpress/recipes/deploy.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="298" column="7" lean-forward="false" selection-start-line="298" selection-start-column="4" selection-end-line="298" selection-end-column="7" />
+            <state relative-caret-position="331">
+              <caret line="297" column="48" lean-forward="false" selection-start-line="297" selection-start-column="48" selection-end-line="297" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -252,12 +251,12 @@
       <workItem from="1518527967674" duration="9745000" />
       <workItem from="1523983963797" duration="712000" />
       <workItem from="1524817218308" duration="8950000" />
-      <workItem from="1525167772482" duration="142000" />
+      <workItem from="1525167772482" duration="375000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19549000" />
+    <option name="totallyTimeSpent" value="19782000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1592" y="-99" width="1280" height="778" extended-state="0" />
@@ -575,8 +574,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wordpress/recipes/deploy.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="298" column="7" lean-forward="false" selection-start-line="298" selection-start-column="4" selection-end-line="298" selection-end-column="7" />
+        <state relative-caret-position="331">
+          <caret line="297" column="48" lean-forward="false" selection-start-line="297" selection-start-column="48" selection-end-line="297" selection-end-column="48" />
           <folding />
         </state>
       </provider>

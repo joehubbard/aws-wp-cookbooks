@@ -295,7 +295,7 @@ search("aws_opsworks_app").each do |app|
         owner "root"
         group "www-data"
         mode "640"
-        notifies :run, "execute[restart-nginx]"
+        notifies :run, "execute[reload-nginx-php]"
     end
 
     execute "check-nginx" do
