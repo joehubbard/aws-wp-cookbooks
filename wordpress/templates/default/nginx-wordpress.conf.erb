@@ -139,7 +139,7 @@ server {
   }
 
   # Woocommerce pages
-  if ($request_uri ~* "/store.*|/cart.*|/my-account.*|/checkout.*|/addons.*") {
+  if ($request_uri ~* "/store.*|/cart.*|/basket.*|/my-account.*|/checkout.*|/addons.*") {
          set $skip_cache 1;
   }
   # Add to cart query string
