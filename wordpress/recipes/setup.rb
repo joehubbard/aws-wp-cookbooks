@@ -96,7 +96,7 @@ if !Dir.exists?("#{healthcheck_root}")
   end
   
   execute "npm-node-update" do
-    command "sudo npm cache clean -f && sudo npm install -g n && sudo n stable"
+    command "sudo npm cache clean -f && sudo npm install -g n && sudo n 8"
   end
   
   apt_package "redis-server" do
