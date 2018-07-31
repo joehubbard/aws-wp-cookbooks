@@ -285,9 +285,11 @@ search("aws_opsworks_app").each do |app|
       to "/etc/nginx/sites-available/nginx-#{app['shortname']}.conf"
     end
     
-    link "/etc/nginx/conf.d/custom-nginx.conf" do
+    link "/etc/nginx/conf.d/custom-nginx-#{app['shortname']}.conf" do
       to "#{site_root}current/custom-nginx.conf"
-      only_if { app['environment']['WP_ENV'] == "production" }
+      only_if do
+        app['environment']['WP_ENV'] == "production" && File.file?("#{site_root}current/custom-nginx.conf")
+      end
     end
 
     template "/etc/nginx/conf.d/log_variables.conf" do
